@@ -1,5 +1,6 @@
 const chart5 = document.getElementById('chart-5');
 
+d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
 
 d3.csv('./data/top_100_youtubers.csv').then(data => {
     var svgwidth = 600;
@@ -9,6 +10,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var inner_width = svgwidth - padding;
     var inner_height = svgheight - padding;
 
+    const income = []
     const parsedData = [];
     data.forEach(row => {
         const channelName = row['ChannelName'];
@@ -18,10 +20,13 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         const q3income = +row['Income q3'];
         const q4income = +row['Income q4'];
         parsedData.push({ channelName, followerCount, q1income, q2income, q3income, q4income })
+        income.push(q1income, q2income, q3income, q4income)
     })
 
-
+    income.sort(d3.descending)
+    console.log(income)
     parsedData.sort(d3.descending);
+
 
     const top5youtubers = parsedData.splice(0, 5)
 
@@ -43,7 +48,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var g = svg
         .append("g")
-        .attr("transform", "translate(50, 50)")
+        .attr("transform", "translate(60, 50)")
         .attr("class", "graph");
 
 
@@ -51,14 +56,28 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .scaleBand()
         .domain(channels)
         .range([0, inner_width])
-        .padding([0.2]);
+        .padding([0.7]);
     var xaxis = d3.axisBottom().scale(xscale);
 
+    var yscale = d3
+        .scaleLinear()
+        .domain([0, 1000000])
+        .range([inner_height, 0])
+
+
+    var yaxis = d3.axisLeft().scale(yscale);
+
+    g.append("g").
+    call(yaxis);
 
     g.append("g")
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
 
 
+        var color = d3
+          .scaleOrdinal()
+          .domain()
+          .range(["#B21666", "#c95c94", "#7d0f47", "#35021c"]);
 
 })
