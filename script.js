@@ -10,34 +10,35 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var inner_width = svgwidth - padding;
     var inner_height = svgheight - padding;
 
-    const income = []
+
     const parsedData = [];
     data.forEach(row => {
         const channelName = row['ChannelName'];
         const followerCount = +row['followers'];
-        const q1income = +row['Income q1'];
-        const q2income = +row['Income q2'];
-        const q3income = +row['Income q3'];
-        const q4income = +row['Income q4'];
-        parsedData.push({ channelName, followerCount, q1income, q2income, q3income, q4income })
-        income.push(q1income, q2income, q3income, q4income)
+        const q1 = +row['Income q1'];
+        const q2 = +row['Income q2'];
+        const q3 = +row['Income q3'];
+        const q4 = +row['Income q4'];
+        const income = [{ q1, q2, q3, q4 }]
+        parsedData.push({ channelName, followerCount, q1, q2, q3, q4, income })
+
     })
 
-    income.sort(d3.descending)
-    console.log(income)
+
     parsedData.sort(d3.descending);
+    console.log(parsedData)
 
 
     const top5youtubers = parsedData.splice(0, 5)
 
     // getting all channel names for x axis
     var channels = top5youtubers.map((d) => d.channelName)
-
     // abbreviating ABCkidTV - Nursery Rhymes to better fit
     var abbr1 = channels[1].split(' - ')
     var abbr2 = abbr1[0]
     channels.splice(1, 1, abbr2)
 
+    console.log(top5youtubers)
 
 
     var svg = d3.select(chart5)
@@ -63,21 +64,19 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .scaleLinear()
         .domain([0, 1000000])
         .range([inner_height, 0])
-
-
     var yaxis = d3.axisLeft().scale(yscale);
 
     g.append("g").
-    call(yaxis);
+        call(yaxis);
 
     g.append("g")
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
 
 
-        var color = d3
-          .scaleOrdinal()
-          .domain()
-          .range(["#B21666", "#c95c94", "#7d0f47", "#35021c"]);
+    var color = d3
+        .scaleOrdinal()
+        //   .domain()
+        .range(["#B21666", "#c95c94", "#7d0f47", "#35021c"]);
 
 })
