@@ -121,3 +121,8 @@ h1 {
     width: 450px;
     height: 450px;
 }
+
+/* katy's doing */
+svg{
+    overflow: visible;
+}
