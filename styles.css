@@ -1,0 +1,59 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Barlow', sans-serif;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+
+    /* Main Colors*/
+    --colorPrimaryPurple: #3B118D;
+    --colorSecondaryMagenta: #B21666;
+    --colorAccentPink: #C33C96;
+
+    /* Functional Colors*/
+    --colorBlack: #050505;
+    --colorDarkGrey: #222222;
+    --colorGrey: #7f7f7f;
+    --colorLightGrey: #eeeeee;
+    --colorWhiteText: #fafafa;
+
+    /* Font Sizes*/
+    --textSizeXS: 1.2rem;
+    --textSizeS: 1.6rem;
+    --textSizeM: 2rem;
+    --textSizeL: 2.4rem;
+    --textSizeXL: 2.8rem;
+    --textSizeXXL: 3.4rem;
+
+    /* Element Spacing*/
+    --space-1: .4rem;
+    --space-2: .8rem;
+    --space-3: 1.6rem;
+    --space-4: 2.4rem;
+    --space-5: 3.2rem;
+
+    /* Font Weight*/
+    --textLight: 300;
+    --textRegular: 400;
+    --textMedium: 500;
+    --textSemiBold: 600;
+    --textBold: 700;
+}
+
+header,
+footer {
+    background-color: chartreuse;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
