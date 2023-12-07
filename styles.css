@@ -4,10 +4,6 @@
     box-sizing: border-box;
 }
 
-body {
-    font-family: 'Barlow', sans-serif;
-}
-
 html {
     scroll-behavior: smooth;
 }
@@ -49,11 +45,79 @@ html {
     --textBold: 700;
 }
 
+body {
+    font-family: 'Barlow', sans-serif;
+    background-color: var(--colorWhiteText);
+}
+
 header,
 footer {
-    background-color: chartreuse;
+    background-color: #fff;
     width: 100%;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    padding: 15px 50px;
+    font-size: var(--textSizeS);
+    font-weight: var(--textSemiBold);
+}
+
+footer span,
+header span {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 30px;
+    height: 100%;
+    margin: var(--space-1);
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: var(--textSizeXL);
+    margin: var(--space-4) 0;
+}
+
+.chartContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.chartContainer>* {
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    margin: 15px;
+}
+
+#chart-1,
+#chart-2,
+#chart-3 {
+    height: 300px;
+    width: 450px;
+}
+
+#chart-5,
+#chart-6,
+#chart-8 {
+    width: 930px;
+    height: 450px;
+}
+
+#chart-4,
+#chart-7,
+#chart-9 {
+    width: 450px;
+    height: 450px;
 }
