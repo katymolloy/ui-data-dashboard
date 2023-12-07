@@ -1,7 +1,7 @@
 const chart5 = document.getElementById('chart-5');
 const chart7 = document.getElementById('chart-7')
 
-d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
+// d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
 
 d3.csv('./data/top_100_youtubers.csv').then(data => {
     var svgwidth = 600;
@@ -18,12 +18,9 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         const followerCount = +row['followers'];
         const views = +row['Views'];
         const category = row['Category']
-        const q1 = +row['Income q1'];
-        const q2 = +row['Income q2'];
-        const q3 = +row['Income q3'];
-        const q4 = +row['Income q4'];
-        const income = [{ quarter: 'q1', value: q1, quarter: 'q2', value: q2, quarter: 'q3', value: q3, quarter: 'q4', value: q4 }]
-        parsedData.push({ channelName, followerCount, views, category, q1, q2, q3, q4, income })
+        const quarters = [{ quarter: 'q1', value: +row['Income q1'] }, { quarter: 'q2', value: +row['Income q2'] },
+        { quarter: 'q3', value: +row['Income q3'] }, { quarter: 'q4', value: +row['Income q4'] }];
+        parsedData.push({ channelName, followerCount, views, category, quarters })
 
     })
     parsedData.sort(d3.descending);
@@ -45,7 +42,6 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr('width', svgheight)
         .attr('height', svgwidth)
 
-
     var g = svg
         .append("g")
         .attr("transform", "translate(60, 50)")
@@ -54,14 +50,14 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var xscale = d3
         .scaleBand()
-        .domain(channels)
+        .domain(top5youtubers.map(d=> d.channelName))
         .range([0, inner_width])
         .padding([0.7]);
     var xaxis = d3.axisBottom().scale(xscale);
 
     var yscale = d3
         .scaleLinear()
-        .domain([0, 1000000])
+        .domain([0, d3.max(top5youtubers, d => d3.max(d.quarters, q => q.value))])
         .range([inner_height, 0])
     var yaxis = d3.axisLeft().scale(yscale);
 
@@ -72,37 +68,31 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
 
-    var subgroups = ['q1', 'q2', 'q3', 'q4']
-
-    var xscaleSubGroup = d3
-        .scaleBand()
-        .domain(subgroups)
-        .range([0, xscale.bandwidth()]);
-
-
 
     var color = d3
         .scaleOrdinal()
-        .domain(subgroups)
+        .domain(top5youtubers.map(d => d.channelName))
         .range(["#B21666", "#c95c94", "#7d0f47", "#35021c"]);
 
-    g.append("g")
-        .selectAll("g")
+
+    const channelGroup = g.selectAll('.graph')
         .data(top5youtubers)
-        .join("g")
-        .attr("transform", (d) => `translate(${xscale(d.channelName)}, 0)`)
-        .selectAll("rect")
-        .data(d => d.income)
-        .join("rect")
-        .attr("x", (d) => xscaleSubGroup(d.quarter))
-        .attr("y", (d) => yscale(d.value))
-        .attr("width", xscaleSubGroup.bandwidth())
-        .attr("height", (d) => inner_height - yscale(d.value))
-        .attr("fill", (d) => color(d.quarter));
+        .enter().append('g')
+        .attr('class', 'channelGroup')
+        .attr('transform', (d) => `(${d.channelName}, 0)`)
+
+    channelGroup.selectAll('rect')
+        .data(d => d.quarters)
+        .enter().append('rect')
+        .attr('width', xscale.bandwidth())
+        .attr('y', d => yscale(d.value))
+        .attr('height', d => inner_height - yscale(d.value))
+        .attr('fill', (d) => color(d.quarter));
+
 
 
     /////////////////////////////////////////////////////////////////////////////////////////// SV CHART SEVEN 
-    
+
 
     // creating an array of all categories, using the Set object to ensure values are unique
     const uniqueCategories = [... new Set(parsedData.map(obj => obj.category))]
