@@ -11,13 +11,13 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     // GROUPED BAR CHART
     const top5 = data.splice(0, 5);
-    const top5data = [];
-    top5.forEach(row => {
-        const channel = row['ChannelName'];
-        const quarters = [+row['Income q1'], +row['Income q2'], +row['Income q3'], +row['Income q4']];
-
-        top5data.push({ channel, quarters })
-    })
+    const top5data = top5.map(row => ({
+        channel: row['ChannelName'],
+        q1: +row['Income q1'], 
+        q2: +row['Income q2'], 
+        q3: +row['Income q3'], 
+        q4: +row['Income q4']
+    }))
     console.log(top5data)
     // getting all channel names for x axis
     var channels = top5data.map((d) => d.channel)
@@ -26,8 +26,8 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var svg = d3.select(chart5)
         .append('svg')
         // .attr('viewBox', '0 0 600 600')
-        .attr('width', svgheight)
-        .attr('height', svgwidth)
+        .attr('width', svgwidth)
+        .attr('height', svgheight)
 
     var g = svg
         .append("g")
@@ -39,12 +39,12 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .scaleBand()
         .domain(channels)
         .range([0, inner_width])
-        .padding([0.7]);
+        .padding([0.5]);
     var xaxis = d3.axisBottom().scale(xscale);
 
     var yscale = d3
         .scaleLinear()
-        .domain([0, d3.max(top5data, d => d3.max(d.quarters))])
+        .domain([0, d3.max(top5data, d => d.q1 + d.q2 + d.q3 + d.q4)])
         .range([inner_height, 0])
     var yaxis = d3.axisLeft().scale(yscale);
 
@@ -55,11 +55,14 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
 
-    var subgroups = ['q1', 'q2', 'q3', 'q4'];
+        var stackedData = d3.stack()
+        .keys(['q1', 'q2', 'q3', 'q4'])
+        (top5data);
+    // var subgroups = ['q1', 'q2', 'q3', 'q4'];
 
     var color = d3
         .scaleOrdinal()
-        .domain(subgroups)
+        .domain(['q1', 'q2', 'q3', 'q4'])
         .range(["#B21666", "#c95c94", "#7d0f47", "#35021c"]);
 
     g.append('g')
@@ -68,16 +71,10 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .join('g')
         .attr('fill', function (d) { return color(d.key); })
         .selectAll('rect')
-        .data(function (d) {
-            return d;
-        })
+        .data(d => d)
         .join('rect')
-        .attr('x', function (d) {
-            return xscale(d.channelName)
-        })
-        .attr('y', function (d) {
-            return yscale(d[1]);
-        })
+        .attr('x', d => xscale(d.data.channel))
+        .attr('y', d => yscale(d[1]))
         .attr('width', xscale.bandwidth())
         .attr('height', function (d) {
             return yscale(d[0]) - yscale(d[1])

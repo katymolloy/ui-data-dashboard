@@ -1,13 +1,7 @@
 const chart7 = document.getElementById('chart-7')
 
 // d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
-d3.csv('./data/top_100_youtubers.csv').then(data => {
-    var svgwidth = 600;
-    var svgheight = 600;
-    var padding = 100;
-
-    var inner_width = svgwidth - padding;
-    var inner_height = svgheight - padding;
+d3.csv('./data/top_100_youtubers.csv').then(data => {   
 
     // GROUPED BAR CHART
     const parsedData = [];
