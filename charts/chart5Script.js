@@ -13,16 +13,14 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     const top5 = data.splice(0, 5);
     const top5data = [];
     top5.forEach(row => {
-        const channelName = row['ChannelName'];
-        const quarters = [{ quarter: 'q1', value: +row['Income q1'] }, { quarter: 'q2', value: +row['Income q2'] },
-        { quarter: 'q3', value: +row['Income q3'] }, { quarter: 'q4', value: +row['Income q4'] }];
+        const channel = row['ChannelName'];
+        const quarters = [+row['Income q1'], +row['Income q2'], +row['Income q3'], +row['Income q4']];
 
-        top5data.push({ channelName, quarters })
+        top5data.push({ channel, quarters })
     })
     console.log(top5data)
     // getting all channel names for x axis
-    var groups = top5data.map((d) => d.channelName)
-
+    var channels = top5data.map((d) => d.channel)
 
 
     var svg = d3.select(chart5)
@@ -39,14 +37,14 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var xscale = d3
         .scaleBand()
-        .domain(groups)
+        .domain(channels)
         .range([0, inner_width])
         .padding([0.7]);
     var xaxis = d3.axisBottom().scale(xscale);
 
     var yscale = d3
         .scaleLinear()
-        .domain([0, d3.max(top5data, d => d3.max(d.quarters, q => q.value))])
+        .domain([0, d3.max(top5data, d => d3.max(d.quarters))])
         .range([inner_height, 0])
     var yaxis = d3.axisLeft().scale(yscale);
 
@@ -58,10 +56,6 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .call(xaxis);
 
     var subgroups = ['q1', 'q2', 'q3', 'q4'];
-    var stackedData = d3.stack()
-        .keys(subgroups)(top5data)
-    console.log(stackedData)
-
 
     var color = d3
         .scaleOrdinal()
