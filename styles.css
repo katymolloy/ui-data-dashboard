@@ -115,7 +115,10 @@ h1 {
     height: 450px;
 }
 
-#chart-4,
+#chart-4 {
+    width: 500px;
+    height: 500px;
+}
 #chart-7,
 #chart-9 {
     width: 450px;
