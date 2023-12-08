@@ -13,9 +13,9 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     const top5 = data.splice(0, 5);
     const top5data = top5.map(row => ({
         channel: row['ChannelName'],
-        q1: +row['Income q1'], 
-        q2: +row['Income q2'], 
-        q3: +row['Income q3'], 
+        q1: +row['Income q1'],
+        q2: +row['Income q2'],
+        q3: +row['Income q3'],
         q4: +row['Income q4']
     }))
     console.log(top5data)
@@ -23,9 +23,9 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var channels = top5data.map((d) => d.channel)
 
 
+
     var svg = d3.select(chart5)
         .append('svg')
-        // .attr('viewBox', '0 0 600 600')
         .attr('width', svgwidth)
         .attr('height', svgheight)
 
@@ -55,10 +55,9 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
 
-        var stackedData = d3.stack()
+    var stackedData = d3.stack()
         .keys(['q1', 'q2', 'q3', 'q4'])
         (top5data);
-    // var subgroups = ['q1', 'q2', 'q3', 'q4'];
 
     var color = d3
         .scaleOrdinal()
@@ -76,8 +75,18 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr('x', d => xscale(d.data.channel))
         .attr('y', d => yscale(d[1]))
         .attr('width', xscale.bandwidth())
-        .attr('height', function (d) {
-            return yscale(d[0]) - yscale(d[1])
+        .attr('height', d => yscale(d[0]) - yscale(d[1]));
+
+    let zoom = d3.zoom()
+        .scaleExtent([1, 5])
+        .on("zoom", function (e) {
+            d3.select('g.graph')
+                .attr('transform', e.transform)
         })
+
+    d3.select('svg').call(zoom)
+
+
+
 
 })
