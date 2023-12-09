@@ -97,6 +97,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     .filter((d) => d.endAngle - d.startAngle > 0.2) // Display portion percentage
     .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
     .attr("y", "1.4em")
+    .attr("x", "0.3em")
     .style("text-anchor", "middle")
     .text((d) => d.data.count + "%");
     
