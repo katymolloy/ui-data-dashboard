@@ -9,15 +9,19 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
   );
 
   // get() method retrieves the count of selected country code
-  // console.log("United States: ", countryCounts.get("US")); 
+  // console.log("United States: ", countryCounts.get("US"));
 
- d3.select('#chart-1')
+  d3.select("#chart-1")
     .append("h2")
-    .text("Country with the most top 100 youtubers")
+    .text("Country with the most top 100 youtubers");
 
-  d3.select('#chart-1')
+  d3.select("#chart-1")
     .append("p")
-    .text(`The United States has the largest portion of the top 100 youtubers with ${countryCounts.get('US')}%`);  
+    .text(
+      `The United States has the largest portion of the top 100 youtubers with ${countryCounts.get(
+        "US"
+      )}%`
+    );
 
   // Create an array by passing countryCounts as the array-like
   // mapFn uses the destructuring assignment to extract the country, and count properties from countryCounts object
@@ -27,7 +31,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     count,
   }));
 
-  countryData
+  countryData;
   var width = 600;
   var height = 600;
   var radius = Math.min(width, height) / 2;
@@ -60,7 +64,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
   var svg = d3
     .select("#chart-1")
     .append("svg")
-    .attr("width", width)
+    .attr("width", width * 2)
     .attr("height", height)
     .append("g")
     .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
@@ -90,9 +94,60 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
 
   arcs
     .append("text")
-    .filter((d) => d.endAngle - d.startAngle > 0.2) // Display Country code depending on slice size 0.1 = 1%
+    .filter((d) => d.endAngle - d.startAngle > 0.2) // Display portion percentage
     .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
     .attr("y", "1.4em")
     .style("text-anchor", "middle")
     .text((d) => d.data.count + "%");
+    
+
+    
+  d3.select("#chart-1")
+    .append("p")
+    .text(
+      "**Countries not labelled on the chart contributed 1%, or less, and were excluded from being displayed"
+    );
+  d3.select("#chart-1")
+    .append("p")
+    .text(
+      "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
+    );
+
+  svg
+    .append("text")
+    .attr("x", 300)
+    .attr("y", -280)
+    .style("text-anchor", "middle")
+    .style("font-weight", "bold")
+    .style("font-size", 20)
+    .text("Legend:");
+
+  var legend = svg
+    .selectAll(".legend")
+    .data(countryData)
+    .enter()
+    .append("g")
+    .attr("class", "legend")
+    .attr("transform", function (d, i) {
+      return "translate(" + 50 + "," + i * -20 + ")";
+    });
+
+  legend
+    .append("rect")
+    .attr("x", width / 2 - 25)
+    .attr("width", 18)
+    .attr("height", 18)
+    .style("fill", function (d) {
+      return colorScale(d.country);
+    });
+
+  legend
+    .append("text")
+    .attr("x", width / 2 + 10)
+    .attr("y", 9)
+    .attr("dy", ".35em")
+    .style("text-anchor", "start")
+    .text(function (d) {
+      return d.country;
+    });
 });
