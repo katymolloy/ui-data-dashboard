@@ -9,7 +9,15 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
   );
 
   // get() method retrieves the count of selected country code
-  // console.log("United States: ", countryCounts.get("US"));
+  // console.log("United States: ", countryCounts.get("US")); 
+
+ d3.select('#chart-1')
+    .append("h2")
+    .text("Country with the most top 100 youtubers")
+
+  d3.select('#chart-1')
+    .append("p")
+    .text(`The United States has the largest portion of the top 100 youtubers with ${countryCounts.get('US')}%`);  
 
   // Create an array by passing countryCounts as the array-like
   // mapFn uses the destructuring assignment to extract the country, and count properties from countryCounts object
@@ -19,6 +27,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     count,
   }));
 
+  countryData
   var width = 600;
   var height = 600;
   var radius = Math.min(width, height) / 2;
@@ -49,7 +58,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     .innerRadius(0);
 
   var svg = d3
-    .select("#chart-8")
+    .select("#chart-1")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
@@ -78,4 +87,12 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     .attr("y", ".4em")
     .style("text-anchor", "middle")
     .text((d) => d.data.country);
+
+  arcs
+    .append("text")
+    .filter((d) => d.endAngle - d.startAngle > 0.2) // Display Country code depending on slice size 0.1 = 1%
+    .attr("transform", (d) => "translate(" + arc.centroid(d) + ")")
+    .attr("y", "1.4em")
+    .style("text-anchor", "middle")
+    .text((d) => d.data.count + "%");
 });
