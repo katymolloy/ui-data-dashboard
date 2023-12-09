@@ -49,7 +49,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     .innerRadius(0);
 
   var svg = d3
-    .select("body")
+    .select("#chart-8")
     .append("svg")
     .attr("width", width)
     .attr("height", height)
