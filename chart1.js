@@ -13,7 +13,7 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
 
   d3.select("#chart-1")
     .append("h2")
-    .text("Country with the most top 100 youtubers");
+    .text("Distribution of Top 100 YouTubers by Country");
 
   d3.select("#chart-1")
     .append("p")
