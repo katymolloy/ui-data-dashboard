@@ -1,0 +1,137 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+:root {
+
+    /* Main Colors*/
+    --colorPrimaryPurple: #3B118D;
+    --colorSecondaryMagenta: #B21666;
+    --colorAccentPink: #C33C96;
+
+    /* Functional Colors*/
+    --colorBlack: #050505;
+    --colorDarkGrey: #222222;
+    --colorGrey: #7f7f7f;
+    --colorLightGrey: #eeeeee;
+    --colorWhiteText: #fafafa;
+
+    /* Font Sizes*/
+    --textSizeXS: 1.2rem;
+    --textSizeS: 1.6rem;
+    --textSizeM: 2rem;
+    --textSizeL: 2.4rem;
+    --textSizeXL: 2.8rem;
+    --textSizeXXL: 3.4rem;
+
+    /* Element Spacing*/
+    --space-1: .4rem;
+    --space-2: .8rem;
+    --space-3: 1.6rem;
+    --space-4: 2.4rem;
+    --space-5: 3.2rem;
+
+    /* Font Weight*/
+    --textLight: 300;
+    --textRegular: 400;
+    --textMedium: 500;
+    --textSemiBold: 600;
+    --textBold: 700;
+}
+
+body {
+    font-family: 'Barlow', sans-serif;
+    background-color: var(--colorWhiteText);
+}
+
+header,
+footer {
+    background-color: #fff;
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 15px 50px;
+    font-size: var(--textSizeS);
+    font-weight: var(--textSemiBold);
+}
+
+footer span,
+header span {
+    display: flex;
+    align-items: center;
+}
+
+.icon {
+    width: 30px;
+    height: 100%;
+    margin: var(--space-1);
+}
+
+main {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    font-size: var(--textSizeXL);
+    margin: var(--space-4) 0;
+}
+
+.chartContainer {
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+}
+
+.chartContainer>* {
+    border-radius: 20px;
+    box-shadow: 1px 1px 10px rgba(0, 0, 0, 0.2);
+    margin: 15px;
+}
+
+#chart-1,
+#chart-2,
+#chart-3 {
+    height: 300px;
+    width: 450px;
+}
+
+#chart-5,
+#chart-6,
+#chart-8 {
+    width: 930px;
+    height: 450px;
+}
+
+#chart-4 {
+    width: 500px;
+    height: 500px;
+}
+#chart-7,
+#chart-9 {
+    width: 450px;
+    height: 450px;
+}
+
+/* katy's doing */
+
+
+#chart-7{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 30px;
+    font-size: 25px;
+}
