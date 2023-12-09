@@ -16,9 +16,6 @@ d3.csv("top_100_youtubers.csv").then(function (data) {
     count,
   }));
 
-  // Sort data by count in descending order
-  
-
   var margin = { top: 20, right: 20, bottom: 50, left: 50 };
   var width = 800 - margin.left - margin.right;
   var height = 400 - margin.top - margin.bottom;
