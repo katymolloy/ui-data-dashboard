@@ -1,5 +1,5 @@
 // Load CSV data asynchronously
-d3.csv("top_100_youtubers.csv").then(function (data) {
+d3.csv("data/top_100_youtubers.csv").then(function (data) {
   // d3.rollup(data, reducer, key) performs data aggregation
   // returns a JS Map object
   var countryCounts = d3.rollup(
