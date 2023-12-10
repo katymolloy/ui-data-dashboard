@@ -32,7 +32,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var g = svg
         .append("g")
         .attr("transform", `translate(60, 50)`)
-        .attr("class", "graph");
+        .attr("class", "graph5");
 
 
     var xscale = d3
@@ -80,11 +80,11 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     let zoom = d3.zoom()
         .scaleExtent([1, 5])
         .on("zoom", function (e) {
-            d3.select('g.graph')
+            d3.select('g.graph5')
                 .attr('transform', e.transform)
         })
 
-    d3.select('svg').call(zoom)
+    d3.select('graph5').call(zoom)
 
 
 
