@@ -27,25 +27,20 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var numberOfSubscribers = chart2Data.map((d) => d.subscribers)
 
     var g = svg.append('g')
-        .attr('transform', 'translate(50, 50)')
+        .attr('transform', 'translate(65, 50)')
         .attr('class', 'graph');
-
-    var tooltip = d3.select(chart2)
-        .append("div")
-        .attr("class", "tooltip")
-        .style("opacity", 0)
 
 
     // The X-scale and X-axis
     var xScale = d3.scaleLinear()
-        .domain(numberOfSubscribers)
+        .domain([0, d3.max(numberOfSubscribers)])
         .range([0, innerWidth]);
 
     var xAxis = d3.axisBottom()
         .scale(xScale);
 
     g.append('g')
-        .attr('transform', 'translate(0, ' + innerWidth + ')')
+        .attr('transform', 'translate(0, ' + innerHeight + ')')
         .call(xAxis);
 
     // The Y-scale and Y-axis
@@ -68,23 +63,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr('r', 3)
         .attr('cx', d => xScale(d.subscribers))
         .attr('cy', d => yScale(d.comments))
-        .style('fill', 'purple')
-        .on('mouseover', function(event, d) {
-            tooltip
-                .transition()
-                .duration(300)
-                .style("opacity", .9)
-            tooltip.html(`
-                Subscribers: ${d.followers} <br> Average Comments: ${d.CommentsAvg}
-            `)  
-            .style("left", event.pageX + "px")
-            .style("top", event.pageY + "px")
-        })
-        .on('mouseout', function(d) {
-            tooltip.transition()
-                .duration(300)
-                .style('opacity', 0)
-        })
+        .style('fill', 'purple');
 
 
     // Titles
@@ -123,7 +102,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         if (!event.selection) return;
 
         const [[x0, y0], [x1, y1]] = event.selection;
-        const selectedPoints = chart2Data.filter(d => (
+        chart2Data.filter(d => (
             xScale(d.subscribers) >= x0 &&
             xScale(d.subscribers) <= x1 &&
             yScale(d.comments) >= y0 &&

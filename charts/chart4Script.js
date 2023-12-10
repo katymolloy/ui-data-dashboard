@@ -1,35 +1,49 @@
-const chart4 = document.getElementById('chart-4');
-
-var svgWidth = 450;
-var svgHeight = 450;
-var padding = 40;
-
-var svg = d3.select(chart4)
-            .append('svg')
-            .attr("viewBox", `0 0 450 450`)
-            
-var innerWidth = svgWidth - padding * 2;
-var innerHeight = svgHeight - padding * 2;
+/*const chart4 = document.getElementById('chart-4');
 
 
 d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
-    // Get the month name of the data
-    var parseDate = d3.timeParse('%m/%d/%Y');
+    var svgWidth = 950;
+    var svgHeight = 450;
+    var padding = 40;
+
+    var svg = d3.select(chart4)
+                .append('svg')
+                .attr('width', svgWidth)
+                .attr('height', svgHeight);
+                
+    var innerWidth = svgWidth - padding * 2;
+    var innerHeight = svgHeight - padding * 2;
+
+
+    const top5Channels = data.splice(0, 5);
+    const chart4Data = top5Channels.map(row => ({
+        month: row['Month'],
+        tSeriesViews: +row['T-Series'],
+        abcKidViews: +row['ABCkidTV - Nursery Rhymes'],
+        setIndiaViews: +row['SET India'],
+        pewdiepieViews: +row['PewDiePie'],
+        mrbeastViews: +row['MrBeast']
+    }))
+    
+    console.log(top5Channels)
+
+
+    // Setting the month format as well as the month names for the x-axis
     var month = d3.timeFormat('%B');
+    var months = chart4Data.map((d) => month(d.month));
 
-    data.forEach((d) => {
 
-        d.Month = parseDate(d.Month); // Parsing the date's data
-        d.nameOfMonth = month(d.Month);
+    // Tooltip
+    var tooltip = d3.select(chart4)
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
 
-    })
 
-    console.log('testing');
-
-    // X-axis
-    var xScale = d3.scaleTime()
-        .domain(data.extent(data, (d) => d.Month))
+    // The X-scale
+    var xScale = d3.scaleBand()
+        .domain(months)
         .range([padding, innerWidth + padding])
         .padding(0.1);
 
@@ -37,13 +51,10 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .attr('transform', 'translate(0,' + (innerHeight + padding) + ')')
         .call(d3.axisBottom(xScale));
 
-    
-    // Getting the column names into a variable, as some of them have spaces and dashes between them. It gets the first row
-    var columnName = Object.keys(data[0]).slice(1); // Nothing the Month column    
 
-    // The Y-axis
+    // The Y-scale
     var yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, (d) => Math.max(d[columnName[0]], d[columnName[1]], d[columnName[2]], d[columnName[3]], d[columnName[4]]))])
+        .domain([0, d3.max(chart4Data, (d) => Math.max(d.tSeriesViews, d.abcKidViews, d.setIndiaViews, d.pewdiepieViews, d.mrbeastViews) / 1000000)])
         .range([innerHeight + padding, padding]);
 
     svg.append('g')
@@ -53,59 +64,243 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
     
     // Line Functions
     var tSeriesLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[0]]));
+    .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+    .y(d => yScale(d.tSeriesViews));
 
     var abcKidTVLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[1]]));
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.abcKidViews));
 
     var setIndiaLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[2]]));
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.setIndiaViews));
 
     var pewdiepieLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[3]]));
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.pewdiepieViews));
 
     var mrBeastLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[4]]));
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.mrbeastViews));
+
+    // Original    
+    var tSeriesLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.tSeriesViews));
+
+    var abcKidTVLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.abcKidViews));
+
+    var setIndiaLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.setIndiaViews));
+
+    var pewdiepieLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.pewdiepieViews));
+
+    var mrBeastLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.pewdiepieViews));
 
 
     // Drawing the lines
 
     // T-Series
     svg.append('path')
-        .data([data])
+        .data([chart4Data])
         .attr('d', tSeriesLine)
         .attr('fill', 'none')
         .attr('stroke', 'red');
 
     // ABCkidTV - Nursery Rhymes
     svg.append('path')
-        .data([data])
+        .data([chart4Data])
         .attr('d', abcKidTVLine)
         .attr('fill', 'none')
         .attr('stroke', 'purple');
 
     // SET India
     svg.append('path')
-        .data([data])
+        .data([chart4Data])
         .attr('d', setIndiaLine)
         .attr('fill', 'none')
         .attr('stroke', 'pink');
 
     // PewDiePie
     svg.append('path')
-        .data([data])
+        .data([chart4Data])
         .attr('d', pewdiepieLine)
         .attr('fill', 'none')
         .attr('stroke', 'blue');
 
     // MrBeast
     svg.append('path')
-        .data([data])
+        .data([chart4Data])
+        .attr('d', mrBeastLine)
+        .attr('fill', 'none')
+        .attr('stroke', 'dark blue');
+
+
+    // Title on the X-axis
+    svg.append('text')
+        .attr('x', svgWidth / 2)
+        .attr('y', svgHeight - 5)
+        .style('text-anchor', 'middle')
+        .text('Month - 2020');
+
+    // Title on the Y-axis
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -svgHeight / 2)
+        .attr('y', 15)
+        .style('text-anchor', 'middle')
+        .text('Avg. Views (In Milions)');
+
+})
+*/
+
+
+const chart4 = document.getElementById('chart-4');
+
+
+d3.csv("./data/avg_view_every_month.csv").then((data) => {
+
+    var svgWidth = 950;
+    var svgHeight = 450;
+    var padding = 40;
+
+    var svg = d3.select(chart4)
+                .append('svg')
+                .attr('width', svgWidth)
+                .attr('height', svgHeight);
+                
+    var innerWidth = svgWidth - padding * 2;
+    var innerHeight = svgHeight - padding * 2;
+
+
+    const top5Channels = data.splice(0, 5);
+    const chart4Data = top5Channels.map(row => ({
+        month: row['Month'],
+        tSeriesViews: +row['T-Series'],
+        abcKidViews: +row['ABCkidTV - Nursery Rhymes'],
+        setIndiaViews: +row['SET India'],
+        pewdiepieViews: +row['PewDiePie'],
+        mrbeastViews: +row['MrBeast']
+    }))
+    
+    console.log(top5Channels)
+
+
+    // Setting the month format as well as the month names for the x-axis
+    var month = d3.timeFormat('%B');
+    var months = chart4Data.map((d) => month(d.month));
+
+
+    // Tooltip
+    var tooltip = d3.select(chart4)
+            .append("div")
+            .attr("class", "tooltip")
+            .style("opacity", 0);
+
+
+    // The X-scale
+    var xScale = d3.scaleBand()
+        .domain(months)
+        .range([padding, innerWidth + padding])
+        .padding(0.1);
+
+    svg.append('g')
+        .attr('transform', 'translate(0,' + (innerHeight + padding) + ')')
+        .call(d3.axisBottom(xScale));
+
+
+    // The Y-scale
+    var yScale = d3.scaleLinear()
+        .domain([0, d3.max(chart4Data, (d) => Math.max(d.tSeriesViews, d.abcKidViews, d.setIndiaViews, d.pewdiepieViews, d.mrbeastViews) / 1000000)])
+        .range([innerHeight + padding, padding]);
+
+    svg.append('g')
+        .attr('transform', 'translate(' + padding + ', 0)')
+        .call(d3.axisLeft(yScale));
+
+    
+    // Line Functions
+    /*var tSeriesLine = d3.line()
+    .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+    .y(d => yScale(d.tSeriesViews));
+
+    var abcKidTVLine = d3.line()
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.abcKidViews));
+
+    var setIndiaLine = d3.line()
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.setIndiaViews));
+
+    var pewdiepieLine = d3.line()
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.pewdiepieViews));
+
+    var mrBeastLine = d3.line()
+        .x(d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(d => yScale(d.mrbeastViews));*/
+
+    var tSeriesLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.tSeriesViews));
+
+    var abcKidTVLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.abcKidViews));
+
+    var setIndiaLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.setIndiaViews));
+
+    var pewdiepieLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.pewdiepieViews));
+
+    var mrBeastLine = d3.line()
+        .x(chart4Data, d => xScale(month(d.month)) + xScale.bandwidth() / 2)
+        .y(chart4Data, d => yScale(d.pewdiepieViews));
+
+
+    // Drawing the lines
+
+    // T-Series
+    svg.append('path')
+        .data([chart4Data])
+        .attr('d', tSeriesLine)
+        .attr('fill', 'none')
+        .attr('stroke', 'red');
+
+    // ABCkidTV - Nursery Rhymes
+    svg.append('path')
+        .data([chart4Data])
+        .attr('d', abcKidTVLine)
+        .attr('fill', 'none')
+        .attr('stroke', 'purple');
+
+    // SET India
+    svg.append('path')
+        .data([chart4Data])
+        .attr('d', setIndiaLine)
+        .attr('fill', 'none')
+        .attr('stroke', 'pink');
+
+    // PewDiePie
+    svg.append('path')
+        .data([chart4Data])
+        .attr('d', pewdiepieLine)
+        .attr('fill', 'none')
+        .attr('stroke', 'blue');
+
+    // MrBeast
+    svg.append('path')
+        .data([chart4Data])
         .attr('d', mrBeastLine)
         .attr('fill', 'none')
         .attr('stroke', 'dark blue');
