@@ -1,8 +1,10 @@
+const chart4 = document.getElementById('chart-4');
+
 var svgWidth = 450;
 var svgHeight = 450;
 var padding = 40;
 
-var svg = d3.select('#chart-4')
+var svg = d3.select(chart4)
             .append('svg')
             .attr("viewBox", `0 0 450 450`)
             
@@ -22,6 +24,8 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         d.nameOfMonth = month(d.Month);
 
     })
+
+    console.log('testing');
 
     // X-axis
     var xScale = d3.scaleTime()

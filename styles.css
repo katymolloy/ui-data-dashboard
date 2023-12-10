@@ -101,6 +101,17 @@ h1 {
     margin: 15px;
 }
 
+
+/* Tooltip */
+div.tooltip {
+    position: absolute;
+    background: rgb(147, 105, 219);
+    padding: 10px;
+    font: 10px Arial, sans-serif;
+    text-align: center;
+}
+
+
 #chart-1,
 #chart-2,
 #chart-3 {
