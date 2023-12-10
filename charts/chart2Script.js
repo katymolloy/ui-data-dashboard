@@ -61,15 +61,15 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
 
     // Crafting the circles
-    g.apppend('g')
+    g.append('g')
         .selectAll('circle')
         .data(chart2Data)
         .join('circle')
         .attr('r', 3)
-        .attr('cx', d => xScale(d.data.numberOfSubscribers))
-        .attr('cy', d => yScale(d.data.comments))
+        .attr('cx', d => xScale(d.subscribers))
+        .attr('cy', d => yScale(d.comments))
         .style('fill', 'purple')
-        .on('mouseover', function(d) {
+        .on('mouseover', function(event, d) {
             tooltip
                 .transition()
                 .duration(300)
@@ -77,8 +77,8 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
             tooltip.html(`
                 Subscribers: ${d.followers} <br> Average Comments: ${d.CommentsAvg}
             `)  
-            .style("left", d3.select(this).attr("cx") + "px")
-            .style("top", d3.select(this).attr("cy") + "px")
+            .style("left", event.pageX + "px")
+            .style("top", event.pageY + "px")
         })
         .on('mouseout', function(d) {
             tooltip.transition()
@@ -118,15 +118,17 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .call(brush);
 
     // The brush's ending functionality
-    const brushEnd = (event) => {
+    function brushEnd(event) {
 
         if (!event.selection) return;
 
         const [[x0, y0], [x1, y1]] = event.selection;
-        const selectedPoints = data.filter(d => {
-            xScale(d.x) >= x0 && xScale(d.x) <= x1 && 
-            yScale(d.y) >= y0 && yScale(d.y) <= y1 
-        });
+        const selectedPoints = chart2Data.filter(d => (
+            xScale(d.subscribers) >= x0 &&
+            xScale(d.subscribers) <= x1 &&
+            yScale(d.comments) >= y0 &&
+            yScale(d.comments) <= y1
+        ));
 
     }
 

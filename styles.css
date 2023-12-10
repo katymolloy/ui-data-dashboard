@@ -113,7 +113,10 @@ div.tooltip {
 
 
 #chart-1,
-#chart-2,
+#chart-2 {
+    width: 900px;
+    height: 400px;
+}
 #chart-3 {
     height: 300px;
     width: 450px;
