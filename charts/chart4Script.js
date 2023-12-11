@@ -68,7 +68,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .append('option')
         .text(function (d) { return d; })
         .attr("value", function (d, i) { return i; })
-        
+
 
     console.log('all data', dataSets)
 
@@ -82,8 +82,8 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
     var xAxis = d3.axisBottom().scale(xScale);
 
     g.append("g")
-    .attr("transform", "translate(90, " + innerHeight + ")")
-    .call(xaxis);
+        .attr("transform", "translate(90, " + innerHeight + ")")
+        .call(xAxis);
 
 
     // Creating the y-scale and y-axis
@@ -139,20 +139,20 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
             // Line function
             var channelLine = d3.line()
-            .x(d => xScale(d.month) + xScale.bandwidth() / 2)
-            .y(d => yScale(d.views));
+                .x(d => xScale(d.month) + xScale.bandwidth() / 2)
+                .y(d => yScale(d.views));
 
             console.log(data)
 
             // Line drawing
             g.append('path')
-            .data([data])
-            .attr('d', channelLine)
-            .attr("transform", "translate(90, 1)")
-            .attr('fill', 'none')
-            .style('stroke-width', '2px')
-            .attr('class', 'line')
-            .attr('stroke', '#B21666');
+                .data([data])
+                .attr('d', channelLine)
+                .attr("transform", "translate(90, 1)")
+                .attr('fill', 'none')
+                .style('stroke-width', '2px')
+                .attr('class', 'line')
+                .attr('stroke', '#B21666');
 
         } else {
 
@@ -163,20 +163,20 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
             // The bar
             g.append('g')
-            .attr("transform", "translate(90, 1)")
+                .attr("transform", "translate(90, 1)")
                 .selectAll('rect')
                 .data(data)
                 .enter()
                 .append('rect')
                 .attr('class', 'bar')
                 .attr('x', d => xScale(d.month))
-                .attr('y', d => yScale(d.views)) 
+                .attr('y', d => yScale(d.views))
                 .attr('width', xScale.bandwidth())
                 .attr('height', d => innerHeight - yScale(d.views))
                 .attr('fill', "#B21666")
 
         }
-    
+
     }
 
 })
