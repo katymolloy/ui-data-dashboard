@@ -1,7 +1,7 @@
 const chart7 = document.getElementById('chart-7')
 
 // d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
-d3.csv('./data/top_100_youtubers.csv').then(data => {   
+d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     // GROUPED BAR CHART
     const parsedData = [];
@@ -13,7 +13,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     })
     parsedData.sort(d3.descending);
 
-    
+
     // creating an array of all categories, using the Set object to ensure values are unique
     const uniqueCategories = [... new Set(parsedData.map(obj => obj.category))]
 
@@ -43,7 +43,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     console.log(mostViews)
 
     // data is output in a readable way
-    d3.select(chart7).append('h2').text('Highest Views per Category')
+    d3.select(chart7).append('h2').text('Most Viewed Category')
     d3.select(chart7).append('p').text(`${mostViews[0].Category} has the most views, with ${mostViews[0].Views} total views`)
 
 })
