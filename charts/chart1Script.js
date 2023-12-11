@@ -1,5 +1,19 @@
 // Load CSV data asynchronously
 d3.csv("data/top_100_youtubers.csv").then(function (data) {
+  // Function to handle legend item click
+  function toggleLegendItem(country) {
+    var slice = arcs.filter((d) => d.data.country === country);
+    var legendItem = legend.filter((d) => d.country === country);
+
+    if (slice.style("display") === "none") {
+      slice.style("display", null);
+      legendItem.classed("legend-inactive", false);
+    } else {
+      slice.style("display", "none");
+      legendItem.classed("legend-inactive", true);
+    }
+  }
+
   // d3.rollup(data, reducer, key) performs data aggregation
   // returns a JS Map object
   var countryCounts = d3.rollup(
@@ -67,7 +81,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .attr("width", width * 2)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + (width / 2) + "," + (height / 2) + ")");
+    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
 
   // Creates pie chart configuration to be used for var arc;
   var pie = d3.pie().value((d) => d.count);
@@ -100,11 +114,8 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .attr("x", "0.3em")
     .style("text-anchor", "middle")
     .text((d) => d.data.count + "%");
-    
 
-  d3.select('#chart-1')
-    .append("h2")
-    .text("DISCLAIMER");  
+  d3.select("#chart-1").append("h2").text("DISCLAIMER");
   d3.select("#chart-1")
     .append("p")
     .text(
@@ -137,7 +148,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
 
   legend
     .append("rect")
-    .attr("x", (width / 2) - 25)
+    .attr("x", width / 2 - 25)
     .attr("width", 18)
     .attr("height", 18)
     .style("fill", function (d) {
@@ -146,11 +157,35 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
 
   legend
     .append("text")
-    .attr("x", (width / 2) + 10)
+    .attr("x", width / 2 + 10)
     .attr("y", 9)
     .attr("dy", ".35em")
     .style("text-anchor", "start")
     .text(function (d) {
       return d.country;
     });
+
+  legend
+    .on("click", function (d) {
+      toggleLegendItem(d.country);
+    })
+    .on("mouseover", function (d) {
+      arcs
+        .filter((arc) => arc.data.country === d.country)
+        .classed("hover", true);
+    })
+    .on("mouseout", function (d) {
+      arcs
+        .filter((arc) => arc.data.country === d.country)
+        .classed("hover", false);
+    });
+
+  d3.select("#chart-1").append("style").text(`
+    .arc:hover {
+      opacity: 0.7;
+    }
+    .legend-inactive {
+      opacity: 0.5;
+    }
+  `);
 });
