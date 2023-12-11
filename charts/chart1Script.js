@@ -116,7 +116,16 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
       "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
     );
 
-  svg
+
+
+
+    var legendContainer = svg
+    .append("g")
+    .attr("transform", function (d, i) {
+      return "translate(" + 50 + "," + i * -20 + ")";
+    });
+
+    legendContainer
     .append("text")
     .attr("x", 300)
     .attr("y", -280)
@@ -125,7 +134,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .style("font-size", 20)
     .text("Legend:");
 
-  var legend = svg
+  var legend = legendContainer
     .selectAll(".legend")
     .data(countryData)
     .enter()
