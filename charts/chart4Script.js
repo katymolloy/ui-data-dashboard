@@ -54,7 +54,7 @@ console.log(months)
 
     var g = svg
         .append("g")
-        // .attr("transform", `translate(${padding}, ${padding})`)  // Adjust the translation based on your layout
+        .attr("transform", `translate(0, 10)`)  // Adjust the translation based on your layout
         .attr("class", "graph4");
 
     d3.select("#dataDropdown")
@@ -141,6 +141,7 @@ console.log(months)
         console.log(data)
         // Bar
         g.append('g')
+        .attr("transform", "translate(90, 1)")
             .selectAll('rect')
             .data(data)
             .enter()
@@ -150,6 +151,7 @@ console.log(months)
             .attr('y', d => yscale(d.views)) // Adjust property based on your data structure
             .attr('width', xscale.bandwidth())
             .attr('height', d => innerHeight - yscale(d.views))
+            .attr('fill', "#B21666")
     }
 
 
