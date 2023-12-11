@@ -33,24 +33,24 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
     // Creating an array of months to use for the xscale
     const months = data.map(row => row['Month'])
 
+    // The dataset for each channel's views
     const dataSets = [tSeriesViews, abcKidViews, setIndiaViews, pewDiePieViews, mrBeastViews]
 
-
+    // The dropdown list
     const dropdownOptions = ['T-Series', 'ABCkidTV - Nursery Rhymes', 'SET India', 'PewDiePie', 'MrBeast'];
-    // const monthNames = [
-    //     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-    //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    // ];
 
 
+    // The sizes
     var svgWidth = 950;
     var svgHeight = 420;
     var padding = 50;
 
-
+    // The inner widths
     var innerWidth = svgWidth - 2 * padding;
     var innerHeight = svgHeight - padding;
 
+
+    // The SVG and Group defining
     var svg = d3.select(chart4)
         .append('svg')
         .attr('width', svgWidth)
@@ -58,8 +58,9 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     var g = svg
         .append("g")
-        .attr("transform", `translate(0, 10)`)  // Adjust the translation based on your layout
+        .attr("transform", `translate(0, 10)`)
         .attr("class", "graph4");
+
 
     d3.select("#dataDropdown")
         .selectAll('myOptions')
@@ -83,7 +84,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     g.append("g")
     .attr("transform", "translate(90, " + innerHeight + ")")
-    .call(xaxis);
+    .call(xAxis);
 
 
     // Creating the y-scale and y-axis
