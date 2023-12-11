@@ -132,6 +132,8 @@ div.tooltip {
 #chart-4 {
     width: 950px;
     height: 450px;
+    display: flex;
+    flex-direction: column;
 }
 #chart-7,
 #chart-9 {

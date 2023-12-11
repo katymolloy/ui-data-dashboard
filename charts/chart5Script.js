@@ -84,7 +84,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
                 .attr('transform', e.transform)
         })
 
-    d3.select('graph5').call(zoom)
+    d3.select('.graph5').call(zoom)
 
 
 
