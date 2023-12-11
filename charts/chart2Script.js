@@ -83,6 +83,13 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
        .style("text-anchor", "middle")
        .text("Avg. Comments");
 
+    // Brushing Title
+    svg.append("text")
+        .attr("x", svgWidth / 2)
+        .attr("y", svgHeight / 12)
+        .style("text-anchor", "middle")
+        .text("Try Brushing")
+
     
     // Brush functionality
 
