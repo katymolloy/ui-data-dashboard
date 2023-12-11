@@ -60,8 +60,8 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .data(dropdownOptions)
         .enter()
         .append('option')
-        .text(function (d) { return d; }) 
-        .attr("value", function (d, i) { return i; }) 
+        .text(function (d) { return d; })
+        .attr("value", function (d, i) { return i; })
 
 
 
@@ -80,7 +80,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     const axisMonth = months.map(monthObj => monthObj.month);
     // Chart 4's data logic
- 
+
     console.log('all data', dataSets)
     console.log('tseries', tSeriesViews)
     console.log('abckids', abcKidViews)
@@ -92,22 +92,29 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
 
 
-
-    // The X-scale and X-axis
-    var xScale = d3.scaleBand()
+    // defining x scale
+    var xscale = d3
+        .scaleBand()
         .domain(axisMonth)
         .range([0, innerWidth])
         .padding(0.2);
-
-    var xAxis = d3.axisBottom()
-        .scale(xScale);
-
-    g.append('g')
-        .attr('transform', `translate(${padding}, ${innerHeight})`)
-        .call(d3.axisBottom(xScale));
+    var xaxis = d3.axisBottom().scale(xscale);
 
 
-   
+    // defining y scale, appending it to g element
+    var yscale = d3
+        .scaleLinear()
+        .domain([0, 30923440])
+        .range([innerHeight, 0])
+    var yaxis = d3.axisLeft().scale(yscale);
+
+    g.append("g")
+        .attr("transform", `translate(90, 0)`)
+        .call(yaxis);
+
+    g.append("g")
+        .attr("transform", "translate(90, " + innerHeight + ")")
+        .call(xaxis);
 
 
     // Title on the X-axis
@@ -123,14 +130,14 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .attr('x', -svgHeight / 2)
         .attr('y', 15)
         .style('text-anchor', 'middle')
-        .text('Avg. Views (In Milions)');
+        .text('Avg. Views');
 
 
     d3.select("#dataDropdown").on("change", function (d) {
- 
+
         var selectedIndex = this.value;
         var selectedDataset = dataSets[selectedIndex];
-     
+
         // console.log('Selected Dataset:', selectedDataset);
         update(selectedDataset)
     })
@@ -138,23 +145,16 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     function update(data) {
         console.log(data)
-         // The Y-scale and Y-axis
-    // var yScale = d3.scaleLinear()
-    //     .domain([0, d3.max(chart4Data, (d) => Math.max(d.tSeriesViews, d.abcKidViews, d.setIndiaViews, d.pewdiepieViews, d.mrbeastViews) / 1000000)])
-    //     .range([innerHeight + 0]);
+        //  The Y-scale and Y-axis
 
-    // g.append('g')
-    //     .call(d3.axisLeft(yScale));
-
-
-    // // Bar
-    // g.append('g')
-    //     .selectAll('g')
-    //     .data(chart4Data)
-    //     .enter()
-    //     .append('g')
-    //     .attr('class', 'bar')
-    // // .attr('transform', d => )
+        // // Bar
+        // g.append('g')
+        //     .selectAll('g')
+        //     .data(data)
+        //     .enter()
+        //     .append('g')
+        //     .attr('class', 'bar')
+        // // .attr('transform', d => )
     }
 
 
