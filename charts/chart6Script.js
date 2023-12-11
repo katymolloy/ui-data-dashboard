@@ -56,7 +56,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr('width', svgwidth)
         .attr('height', svgheight)
 
-        const title = d3.select('.yearTitle')
+        const title = d3.select('.yearTitle');
 
 
     var g = svg
