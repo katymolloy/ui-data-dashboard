@@ -1,8 +1,8 @@
 const chart3 = document.getElementById('chart-3');
 
 d3.csv('./data/top_100_youtubers.csv').then(data => {
-    var svgwidth = 930;
-    var svgheight = 450;
+    var svgwidth = 450;
+    var svgheight = 400;
     var padding = 100;
 
     var inner_width = svgwidth - padding;
@@ -36,7 +36,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var g = svg
         .append("g")
-        .attr("transform", `translate(50, 50)`)
+        .attr("transform", `translate(30, 30)`)
         .attr("class", "chart3");
 
 
@@ -46,7 +46,8 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .range([0, inner_width])
         .padding([0.5]);
 
-    var xaxis = d3.axisBottom().scale(xscale);
+    var xaxis = d3.axisBottom()
+        .scale(xscale);
 
     var yscale = d3
         .scaleLinear()
@@ -59,7 +60,12 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     g.append("g")
         .attr("transform", "translate(0, " + inner_height + ")")
-        .call(xaxis);
+        .call(xaxis)
+        .selectAll("text")
+        .style("text-anchor", "end")
+        .attr("dx", "0px")
+        .attr("dy", "10px")
+        .attr("transform", "rotate(-45)");
 
     g.append('g')
 
