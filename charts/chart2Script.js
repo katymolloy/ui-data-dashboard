@@ -27,7 +27,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var numberOfSubscribers = chart2Data.map((d) => d.subscribers)
 
     var g = svg.append('g')
-        .attr('transform', 'translate(65, 50)')
+        .attr('transform', 'translate(75, 50)')
         .attr('class', 'graph');
 
 
@@ -79,7 +79,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     svg.append("text")
        .attr("transform", "rotate(-90)")
        .attr("x", -svgHeight / 2)
-       .attr("y", 15)
+       .attr("y", 20)
        .style("text-anchor", "middle")
        .text("Avg. Comments");
 
