@@ -37,13 +37,13 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
             let currCategory = uniqueCategories[j]
 
             let dataForCat = yearlyData.filter(item => item.category === currCategory)
-            channelCount = Array.from(new Set(dataForCat.map(item => item.channel))).length
-            categoryCounts[currCategory] = channelCount;
+            let channelCount = Array.from(new Set(dataForCat.map(item => item.channel))).length
+            categoryCount[currCategory] = {numberOfChannels: channelCount};
         }
-        channelCount[currYear] = categoryCount;
+        channelCount[currYear] = {category: categoryCount};
     }
 
-
+console.log(channelCount)
 
     var svg = d3.select(chart6)
         .append('svg')
