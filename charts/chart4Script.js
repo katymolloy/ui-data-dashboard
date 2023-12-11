@@ -128,10 +128,14 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
 
     function update(data) {
+
         // Removing the line before appending new ones
         g.selectAll('.line').remove();
 
+
+        // Switching between lines and bars
         if (line === true) {
+
             // Line function
             var channelLine = d3.line()
             .x(d => xscale(d.month) + xscale.bandwidth() / 2)
@@ -148,7 +152,9 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
             .style('stroke-width', '2px')
             .attr('class', 'line')
             .attr('stroke', '#B21666');
+
         } else {
+
             // removing bars before appending new ones
             g.selectAll('.bar').remove();
 
@@ -166,6 +172,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
                 .attr('width', xscale.bandwidth())
                 .attr('height', d => innerHeight - yscale(d.views))
                 .attr('fill', "#B21666")
+                
         }
     
     }
