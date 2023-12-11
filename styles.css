@@ -141,8 +141,8 @@ div.tooltip {
 
 /* katy's doing */
 
-
-#chart-7 {
+#chart-7,
+#chart-8 {
     display: flex;
     flex-direction: column;
     justify-content: center;
