@@ -20,30 +20,41 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     const uniqueYears = [...new Set(updateData.map(obj => obj.est))]
 
-    const channelCount = {};
 
     uniqueYears.sort((a, b) => a - b)
 
-    console.log('Ordered years', uniqueYears);
+    const result = uniqueYears.map(obj => ({
+        year: obj,
+        categories: uniqueCategories.map(category => ({
+            category: category,
+            channelNum: 0
+        }))
+    }))
 
-    for (let i = 0; i < uniqueYears.length; i++) {
-        let currYear = uniqueYears[i];
-
-        let yearlyData = updateData.filter((item) => item.est === currYear)
-
-        const categoryCount = {}
-
-        for (let j = 0; j < uniqueCategories.length; j++) {
-            let currCategory = uniqueCategories[j]
-
-            let dataForCat = yearlyData.filter(item => item.category === currCategory)
-            let channelCount = Array.from(new Set(dataForCat.map(item => item.channel))).length
-            categoryCount[currCategory] = {numberOfChannels: channelCount};
+    let count = 0
+    for (let i = 0; i < updateData.length; i++) {
+        let currChannel = updateData[i];
+    
+        for (let j = 0; j < result.length; j++) {
+            let resYear = result[j].year;
+            let resCategory = result[j].categories;
+    
+            if (currChannel.est <= resYear) {
+                for (let k = 0; k < resCategory.length; k++) {
+                    if (currChannel.category === resCategory[k].category) {
+                       
+                       ++result[j].categories[k].channelNum;
+                    }
+                }
+            }
         }
-        channelCount[currYear] = {category: categoryCount};
     }
+    console.log(result)
 
-console.log(channelCount)
+
+
+
+
 
     var svg = d3.select(chart6)
         .append('svg')
