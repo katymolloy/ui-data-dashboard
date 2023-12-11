@@ -1,110 +1,111 @@
-var svgWidth = 450;
-var svgHeight = 450;
-var padding = 40;
-
-var svg = d3.select('#chart-4')
-            .append('svg')
-            .attr("viewBox", `0 0 450 450`)
-            
-var innerWidth = svgWidth - padding * 2;
-var innerHeight = svgHeight - padding * 2;
-
+const chart4 = document.getElementById('chart-4');
 
 d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
-    // Get the month name of the data
-    var parseDate = d3.timeParse('%m/%d/%Y');
-    var month = d3.timeFormat('%B');
+    // parsing all data for the bar charts
+    const tSeriesViews = data.map(row => ({
+        month: row['Month'],
+        views: +row['T-Series'],
+    }))
 
-    data.forEach((d) => {
+    const abcKidViews = data.map(row => ({
+        month: row['Month'],
+        views: +row['ABCkidTV - Nursery Rhymes']
+    }))
 
-        d.Month = parseDate(d.Month); // Parsing the date's data
-        d.nameOfMonth = month(d.Month);
+    const setIndiaViews = data.map(row => ({
+        month: row['Month'],
+        views: +row['SET India']
+    }))
 
-    })
+    const pewDiePieViews = data.map(row => ({
+        month: row['Month'],
+        views: +row['PewDiePie'],
+    }))
 
-    // X-axis
-    var xScale = d3.scaleTime()
-        .domain(data.extent(data, (d) => d.Month))
-        .range([padding, innerWidth + padding])
-        .padding(0.1);
+    const mrBeastViews = data.map(row => ({
+        month: row['Month'],
+        views: +row['MrBeast']
+    }))
 
-    svg.append('g')
-        .attr('transform', 'translate(0,' + (innerHeight + padding) + ')')
-        .call(d3.axisBottom(xScale));
+    // creating an array of months to use for the xscale
+    const months = data.map(row => row['Month'])
 
-    
-    // Getting the column names into a variable, as some of them have spaces and dashes between them. It gets the first row
-    var columnName = Object.keys(data[0]).slice(1); // Nothing the Month column    
-
-    // The Y-axis
-    var yScale = d3.scaleLinear()
-        .domain([0, d3.max(data, (d) => Math.max(d[columnName[0]], d[columnName[1]], d[columnName[2]], d[columnName[3]], d[columnName[4]]))])
-        .range([innerHeight + padding, padding]);
-
-    svg.append('g')
-        .attr('transform', 'translate(' + padding + ', 0)')
-        .call(d3.axisLeft(yScale));
-
-    
-    // Line Functions
-    var tSeriesLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[0]]));
-
-    var abcKidTVLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[1]]));
-
-    var setIndiaLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[2]]));
-
-    var pewdiepieLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[3]]));
-
-    var mrBeastLine = d3.line()
-        .x(d => xScale(d.Month) + xScale.bandwidth() / 2)
-        .y(d => yScale(d[columnName[4]]));
+    const dataSets = [tSeriesViews, abcKidViews, setIndiaViews, pewDiePieViews, mrBeastViews]
 
 
-    // Drawing the lines
+    const dropdownOptions = ['T-Series', 'ABCkidTV - Nursery Rhymes', 'SET India', 'PewDiePie', 'MrBeast'];
+    // const monthNames = [
+    //     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    // ];
 
-    // T-Series
-    svg.append('path')
-        .data([data])
-        .attr('d', tSeriesLine)
-        .attr('fill', 'none')
-        .attr('stroke', 'red');
+    var svgWidth = 950;
+    var svgHeight = 420;
+    var padding = 50;
 
-    // ABCkidTV - Nursery Rhymes
-    svg.append('path')
-        .data([data])
-        .attr('d', abcKidTVLine)
-        .attr('fill', 'none')
-        .attr('stroke', 'purple');
 
-    // SET India
-    svg.append('path')
-        .data([data])
-        .attr('d', setIndiaLine)
-        .attr('fill', 'none')
-        .attr('stroke', 'pink');
+    var innerWidth = svgWidth - 2 * padding;
+    var innerHeight = svgHeight - padding;
 
-    // PewDiePie
-    svg.append('path')
-        .data([data])
-        .attr('d', pewdiepieLine)
-        .attr('fill', 'none')
-        .attr('stroke', 'blue');
+    var svg = d3.select(chart4)
+        .append('svg')
+        .attr('width', svgWidth)
+        .attr('height', svgHeight);
 
-    // MrBeast
-    svg.append('path')
-        .data([data])
-        .attr('d', mrBeastLine)
-        .attr('fill', 'none')
-        .attr('stroke', 'dark blue');
+    var g = svg
+        .append("g")
+        .attr("transform", `translate(0, 10)`)  // Adjust the translation based on your layout
+        .attr("class", "graph4");
+
+    d3.select("#dataDropdown")
+        .selectAll('myOptions')
+        .data(dropdownOptions)
+        .enter()
+        .append('option')
+        .text(function (d) { return d; })
+        .attr("value", function (d, i) { return i; })
+
+
+    // const months = data.map(row => {
+    //     const dateDivided = row['Month'].split('/').shift()
+    //     const monthName = monthNames[dateDivided - 1]
+    //     return {
+    //         month: monthName
+    //     }
+    // })
+
+
+
+    // const axisMonth = months.map(monthObj => monthObj.month);
+    // Chart 4's data logic
+
+    console.log('all data', dataSets)
+
+
+    // defining x scale
+    var xscale = d3
+        .scaleBand()
+        .domain(months)
+        .range([0, innerWidth])
+        .padding(0.2);
+    var xaxis = d3.axisBottom().scale(xscale);
+
+
+    // defining y scale, appending it to g element
+    var yscale = d3
+        .scaleLinear()
+        .domain([0, 53434733])
+        .range([innerHeight, 0])
+    var yaxis = d3.axisLeft().scale(yscale);
+
+    g.append("g")
+        .attr("transform", `translate(90, 0)`)
+        .call(yaxis);
+
+    g.append("g")
+        .attr("transform", "translate(90, " + innerHeight + ")")
+        .call(xaxis);
 
 
     // Title on the X-axis
@@ -112,7 +113,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .attr('x', svgWidth / 2)
         .attr('y', svgHeight - 5)
         .style('text-anchor', 'middle')
-        .text('Month - 2020');
+        .text('Month');
 
     // Title on the Y-axis
     svg.append('text')
@@ -120,6 +121,43 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .attr('x', -svgHeight / 2)
         .attr('y', 15)
         .style('text-anchor', 'middle')
-        .text('Avg. Views (In Milions)');
+        .text('Avg. Views');
+
+
+    // on dropdown change, the data set is passed to the update function
+    d3.select("#dataDropdown").on("change", function () {
+
+        var selectedIndex = this.value;
+        var selectedDataset = dataSets[selectedIndex];
+
+        // console.log('Selected Dataset:', selectedDataset);
+        update(selectedDataset)
+    })
+
+    // triggering the event on load so there will always be a chart displayed
+    d3.select("#dataDropdown").dispatch("change");
+
+
+    function update(data) {
+        // removing bars before appending new ones
+        g.selectAll('.bar').remove();
+
+        console.log(data)
+        // Bar
+        g.append('g')
+            .attr("transform", "translate(90, 1)")
+            .selectAll('rect')
+            .data(data)
+            .enter()
+            .append('rect')
+            .attr('class', 'bar')
+            .attr('x', d => xscale(d.month))
+            .attr('y', d => yscale(d.views)) // Adjust property based on your data structure
+            .attr('width', xscale.bandwidth())
+            .attr('height', d => innerHeight - yscale(d.views))
+            .attr('fill', "#B21666")
+    }
+
+
 
 })

@@ -101,8 +101,22 @@ h1 {
     margin: 15px;
 }
 
+
+/* Tooltip */
+div.tooltip {
+    position: absolute;
+    background: rgb(147, 105, 219);
+    padding: 10px;
+    font: 10px Arial, sans-serif;
+    text-align: center;
+}
+
+
 #chart-1,
-#chart-2,
+#chart-2 {
+    width: 900px;
+    height: 400px;
+}
 #chart-3 {
     height: 300px;
     width: 450px;
@@ -116,8 +130,10 @@ h1 {
 }
 
 #chart-4 {
-    width: 500px;
-    height: 500px;
+    width: 950px;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
 }
 #chart-7,
 #chart-9 {
@@ -135,3 +151,4 @@ h1 {
     padding: 30px;
     font-size: 25px;
 }
+
