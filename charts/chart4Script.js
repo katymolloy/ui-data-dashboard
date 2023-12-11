@@ -4,38 +4,40 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     const tSeriesViews = data.map(row => ({
         month: row['Month'],
-        tSeries: +row['T-Series'],
+        views: +row['T-Series'],
     }))
 
     const abcKidViews = data.map(row => ({
         month: row['Month'],
-        abcKids: +row['ABCkidTV - Nursery Rhymes']
+        views: +row['ABCkidTV - Nursery Rhymes']
     }))
 
     const setIndiaViews = data.map(row => ({
         month: row['Month'],
-        setIndia: +row['SET India']
+        views: +row['SET India']
     }))
 
     const pewDiePieViews = data.map(row => ({
         month: row['Month'],
-        pewDiePie: +row['PewDiePie'],
+        views: +row['PewDiePie'],
     }))
 
     const mrBeastViews = data.map(row => ({
         month: row['Month'],
-        mrBeast: +row['MrBeast']
+        views: +row['MrBeast']
     }))
 
+const months = data.map(row => row['Month'])
+console.log(months)
 
     const dataSets = [tSeriesViews, abcKidViews, setIndiaViews, pewDiePieViews, mrBeastViews]
 
 
     const dropdownOptions = ['T-Series', 'ABCkidTV - Nursery Rhymes', 'SET India', 'PewDiePie', 'MrBeast'];
-    const monthNames = [
-        "Jan", "Feb", "Mar", "Apr", "May", "Jun",
-        "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
-    ];
+    // const monthNames = [
+    //     "Jan", "Feb", "Mar", "Apr", "May", "Jun",
+    //     "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"
+    // ];
 
     var svgWidth = 950;
     var svgHeight = 420;
@@ -64,38 +66,27 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .attr("value", function (d, i) { return i; })
 
 
+    // const months = data.map(row => {
+    //     const dateDivided = row['Month'].split('/').shift()
+    //     const monthName = monthNames[dateDivided - 1]
+    //     return {
+    //         month: monthName
+    //     }
+    // })
 
 
 
-    const months = data.map(row => {
-        const dateDivided = row['Month'].split('/').shift()
-        const monthName = monthNames[dateDivided - 1]
-        return {
-            month: monthName
-        }
-    })
-
-    console.log(months)
-
-
-    const axisMonth = months.map(monthObj => monthObj.month);
+    // const axisMonth = months.map(monthObj => monthObj.month);
     // Chart 4's data logic
 
     console.log('all data', dataSets)
-    console.log('tseries', tSeriesViews)
-    console.log('abckids', abcKidViews)
-    console.log('setIndia', setIndiaViews)
-    console.log('pewDiePie', pewDiePieViews)
-    console.log('mrbeast', mrBeastViews)
-
-
 
 
 
     // defining x scale
     var xscale = d3
         .scaleBand()
-        .domain(axisMonth)
+        .domain(months)
         .range([0, innerWidth])
         .padding(0.2);
     var xaxis = d3.axisBottom().scale(xscale);
@@ -144,20 +135,23 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
 
     function update(data) {
-        console.log(data)
-        //  The Y-scale and Y-axis
+        // removing bars before appending new ones
+        g.selectAll('.bar').remove();
 
-        // // Bar
-        // g.append('g')
-        //     .selectAll('g')
-        //     .data(data)
-        //     .enter()
-        //     .append('g')
-        //     .attr('class', 'bar')
-        // // .attr('transform', d => )
+        console.log(data)
+        // Bar
+        g.append('g')
+            .selectAll('rect')
+            .data(data)
+            .enter()
+            .append('rect')
+            .attr('class', 'bar')
+            .attr('x', d => xscale(d.month))
+            .attr('y', d => yscale(d.views)) // Adjust property based on your data structure
+            .attr('width', xscale.bandwidth())
+            .attr('height', d => innerHeight - yscale(d.views))
     }
 
 
-    // let selectedValue = 'T-Series'
 
 })

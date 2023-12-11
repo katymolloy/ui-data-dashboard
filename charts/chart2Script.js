@@ -22,7 +22,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         subscribers: +row['followers'],
         comments: +row['CommentsAvg']
     }))
-    console.log(chart2Data)
+    // console.log(chart2Data)
     
     var numberOfSubscribers = chart2Data.map((d) => d.subscribers)
 
