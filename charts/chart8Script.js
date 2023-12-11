@@ -21,10 +21,10 @@ d3.csv("data/top_100_youtubers.csv").then((data) => {
       maxCount = countryData[i].count;
       maxCountCountry = countryData[i].country;
     }
-  }  
+  }
 
   let h2 = document.createElement("h2");
-  h2.textContent = 'Country with highest distribution of top 100 youtubers';
+  h2.textContent = 'Country With The Most Channels In Top 100';
   let p = document.createElement('p');
   p.textContent = `The ${maxCountCountry} with ${maxCount}%`;
   let chart8 = document.getElementById("chart-8");
