@@ -34,32 +34,32 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     let count = 0
     for (let i = 0; i < updateData.length; i++) {
         let currChannel = updateData[i];
-    
+
         for (let j = 0; j < result.length; j++) {
             let resYear = result[j].year;
             let resCategory = result[j].categories;
-    
+
             if (currChannel.est <= resYear) {
                 for (let k = 0; k < resCategory.length; k++) {
                     if (currChannel.category === resCategory[k].category) {
-                       
-                       ++result[j].categories[k].channelNum;
+
+                        ++result[j].categories[k].channelNum;
                     }
                 }
             }
         }
     }
-    console.log(result)
-
-
-
-
 
 
     var svg = d3.select(chart6)
         .append('svg')
         .attr('width', svgwidth)
         .attr('height', svgheight)
+
+        var titleSpot = svg.append('g')
+        .attr("x", svgwidth / 2)
+        .attr("y", 30)  // Adjust the y-coordinate based on your layout
+        .attr("text-anchor", "middle")
 
     var g = svg
         .append("g")
@@ -75,7 +75,56 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     var xaxis = d3.axisBottom().scale(xscale);
 
 
+    var yscale = d3
+        .scaleLinear()
+        .domain([0, 39])
+        .range([inner_height, 0])
+    var yaxis = d3.axisLeft().scale(yscale);
+
+
+    g.append("g").
+        call(yaxis);
+
     g.append("g")
         .attr("transform", "translate(0, " + inner_height + ")")
         .call(xaxis);
+
+
+    const slider = d3.select('#year-slider')
+
+
+
+
+    slider.on('input', function () {
+
+        g.selectAll('.line').remove();
+        g.selectAll('.yearTitle').remove();
+        const sliderVal = this.value;
+
+
+        g.append("text")
+        .attr('class', 'yearTitle')
+        .style("font-size", "20px")
+        .style("font-weight", "bold")
+        .text(sliderVal);
+
+
+
+        const selectedData = result.find(d => d.year === sliderVal)
+        const lineData = selectedData.categories
+
+        var categoryLine = d3.line()
+            .x(d => xscale(d.category) + xscale.bandwidth())
+            .y(d => yscale(d.channelNum));
+
+        g.append('path')
+            .data([lineData])
+            .attr('d', categoryLine)
+            .attr('fill', 'none')
+            .style('stroke-width', '2px')
+            .attr('class', 'line')
+            .attr('stroke', '#B21666');
+    })
+
+    d3.select("#year-slider").dispatch("input");
 })
