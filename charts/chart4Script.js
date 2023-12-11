@@ -2,6 +2,7 @@ const chart4 = document.getElementById('chart-4');
 
 d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
+    // parsing all data for the bar charts
     const tSeriesViews = data.map(row => ({
         month: row['Month'],
         views: +row['T-Series'],
@@ -27,8 +28,8 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         views: +row['MrBeast']
     }))
 
-const months = data.map(row => row['Month'])
-console.log(months)
+    // creating an array of months to use for the xscale
+    const months = data.map(row => row['Month'])
 
     const dataSets = [tSeriesViews, abcKidViews, setIndiaViews, pewDiePieViews, mrBeastViews]
 
@@ -82,7 +83,6 @@ console.log(months)
     console.log('all data', dataSets)
 
 
-
     // defining x scale
     var xscale = d3
         .scaleBand()
@@ -95,7 +95,7 @@ console.log(months)
     // defining y scale, appending it to g element
     var yscale = d3
         .scaleLinear()
-        .domain([0, 30923440])
+        .domain([0, 53434733])
         .range([innerHeight, 0])
     var yaxis = d3.axisLeft().scale(yscale);
 
@@ -113,7 +113,7 @@ console.log(months)
         .attr('x', svgWidth / 2)
         .attr('y', svgHeight - 5)
         .style('text-anchor', 'middle')
-        .text('Month - 2020');
+        .text('Month');
 
     // Title on the Y-axis
     svg.append('text')
@@ -124,7 +124,8 @@ console.log(months)
         .text('Avg. Views');
 
 
-    d3.select("#dataDropdown").on("change", function (d) {
+    // on dropdown change, the data set is passed to the update function
+    d3.select("#dataDropdown").on("change", function () {
 
         var selectedIndex = this.value;
         var selectedDataset = dataSets[selectedIndex];
@@ -132,6 +133,9 @@ console.log(months)
         // console.log('Selected Dataset:', selectedDataset);
         update(selectedDataset)
     })
+
+    // triggering the event on load so there will always be a chart displayed
+    d3.select("#dataDropdown").dispatch("change");
 
 
     function update(data) {
@@ -141,7 +145,7 @@ console.log(months)
         console.log(data)
         // Bar
         g.append('g')
-        .attr("transform", "translate(90, 1)")
+            .attr("transform", "translate(90, 1)")
             .selectAll('rect')
             .data(data)
             .enter()
