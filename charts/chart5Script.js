@@ -31,7 +31,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var g = svg
         .append("g")
-        .attr("transform", `translate(60, 50)`)
+        .attr("transform", `translate(80, 50)`)
         .attr("class", "graph5");
 
 
@@ -86,7 +86,21 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     d3.select('.graph5').call(zoom)
 
+    
+    // Title on the X-axis
+    svg.append('text')
+        .attr('x', svgwidth / 2)
+        .attr('y', svgheight - 5)
+        .style('text-anchor', 'middle')
+        .text('YouTube Channel');
 
+    // Title on the Y-axis
+    svg.append('text')
+        .attr('transform', 'rotate(-90)')
+        .attr('x', -svgheight / 2)
+        .attr('y', 15)
+        .style('text-anchor', 'middle')
+        .text('Quarterly Income');
 
 
 })

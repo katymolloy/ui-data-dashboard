@@ -65,25 +65,12 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .append('option')
         .text(function (d) { return d; })
         .attr("value", function (d, i) { return i; })
-
-
-    // const months = data.map(row => {
-    //     const dateDivided = row['Month'].split('/').shift()
-    //     const monthName = monthNames[dateDivided - 1]
-    //     return {
-    //         month: monthName
-    //     }
-    // })
-
-
-
-    // const axisMonth = months.map(monthObj => monthObj.month);
-    // Chart 4's data logic
+        
 
     console.log('all data', dataSets)
 
 
-    // defining x scale
+    // Fefining x scale
     var xscale = d3
         .scaleBand()
         .domain(months)
@@ -92,7 +79,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
     var xaxis = d3.axisBottom().scale(xscale);
 
 
-    // defining y scale, appending it to g element
+    // Fefining y scale, appending it to g element
     var yscale = d3
         .scaleLinear()
         .domain([0, 53434733])
@@ -124,7 +111,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .text('Avg. Views');
 
 
-    // on dropdown change, the data set is passed to the update function
+    // On dropdown change, the data set is passed to the update function
     d3.select("#dataDropdown").on("change", function () {
 
         var selectedIndex = this.value;
@@ -134,28 +121,30 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         update(selectedDataset)
     })
 
-    // triggering the event on load so there will always be a chart displayed
+    // Triggering the event on load so there will always be a chart displayed
     d3.select("#dataDropdown").dispatch("change");
 
 
     function update(data) {
-        // removing bars before appending new ones
-        g.selectAll('.bar').remove();
+        // Removing the line before appending new ones
+        g.selectAll('.line').remove();
+
+        // Line function
+        var channelLine = d3.line()
+            .x(d => xscale(d.month) + xscale.bandwidth() / 2)
+            .y(d => yscale(d.views));
 
         console.log(data)
-        // Bar
-        g.append('g')
+
+        // Line
+        g.append('path')
+            .data([data])
+            .attr('d', channelLine)
             .attr("transform", "translate(90, 1)")
-            .selectAll('rect')
-            .data(data)
-            .enter()
-            .append('rect')
-            .attr('class', 'bar')
-            .attr('x', d => xscale(d.month))
-            .attr('y', d => yscale(d.views)) // Adjust property based on your data structure
-            .attr('width', xscale.bandwidth())
-            .attr('height', d => innerHeight - yscale(d.views))
-            .attr('fill', "#B21666")
+            .attr('fill', 'none')
+            .style('stroke-width', '2px')
+            .attr('class', 'line')
+            .attr('stroke', '#B21666');
     }
 
 
