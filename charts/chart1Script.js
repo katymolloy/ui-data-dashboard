@@ -100,11 +100,11 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .attr("x", "0.3em")
     .style("text-anchor", "middle")
     .text((d) => d.data.count + "%");
-    
+
 
   d3.select('#chart-1')
     .append("h2")
-    .text("DISCLAIMER");  
+    .text("DISCLAIMER");
   d3.select("#chart-1")
     .append("p")
     .text(

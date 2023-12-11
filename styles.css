@@ -116,14 +116,18 @@ div.tooltip {
     width: 900px;
     height: 400px;
 }
-#chart-3 {
+
+#chart-7,
+#chart-8,
+#chart-9 {
     height: 300px;
     width: 450px;
+    color: white;
+    background-image: linear-gradient(to right, var(--colorPrimaryPurple), var(--colorAccentPink));
 }
 
 #chart-5,
-#chart-6,
-#chart-8 {
+#chart-6 {
     width: 930px;
     height: 450px;
 }
@@ -134,20 +138,14 @@ div.tooltip {
     display: flex;
     flex-direction: column;
 }
-#chart-7,
-#chart-9 {
-    width: 450px;
-    height: 450px;
-}
 
 /* katy's doing */
 
 
-#chart-7{
+#chart-7 {
     display: flex;
     flex-direction: column;
     justify-content: center;
     padding: 30px;
     font-size: 25px;
 }
-
