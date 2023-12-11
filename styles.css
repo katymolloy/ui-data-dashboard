@@ -112,6 +112,12 @@ div.tooltip {
 }
 
 
+/*
+chart 7,8,9: 300h, 450w
+chart 1: 450h, 450w
+chart 2,3,4,5,6: 450h, 100%
+*/
+
 #chart-2 {
     width: 900px;
     height: 400px;
