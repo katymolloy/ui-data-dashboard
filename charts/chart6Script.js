@@ -61,11 +61,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     var g = svg
         .append("g")
-<<<<<<< HEAD
-        .attr("transform", `translate(55, 50)`)
-=======
         .attr("transform", `translate(60, 12)`)
->>>>>>> 4c36a898513c8062b7fd0c7bfa826fbe28b9b542
         .attr("class", "graph6");
 
 
