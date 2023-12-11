@@ -1,5 +1,7 @@
 const chart4 = document.getElementById('chart-4');
 
+var line = true; // For switching on and off between the lines and bars
+
 d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     // parsing all data for the bar charts
@@ -126,18 +128,23 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
 
     function update(data) {
+
         // Removing the line before appending new ones
         g.selectAll('.line').remove();
 
-        // Line function
-        var channelLine = d3.line()
+
+        // Switching between lines and bars
+        if (line === true) {
+
+            // Line function
+            var channelLine = d3.line()
             .x(d => xscale(d.month) + xscale.bandwidth() / 2)
             .y(d => yscale(d.views));
 
-        console.log(data)
+            console.log(data)
 
-        // Line
-        g.append('path')
+            // Line
+            g.append('path')
             .data([data])
             .attr('d', channelLine)
             .attr("transform", "translate(90, 1)")
@@ -145,8 +152,29 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
             .style('stroke-width', '2px')
             .attr('class', 'line')
             .attr('stroke', '#B21666');
+
+        } else {
+
+            // removing bars before appending new ones
+            g.selectAll('.bar').remove();
+
+            console.log(data)
+            // Bar
+            g.append('g')
+            .attr("transform", "translate(90, 1)")
+                .selectAll('rect')
+                .data(data)
+                .enter()
+                .append('rect')
+                .attr('class', 'bar')
+                .attr('x', d => xscale(d.month))
+                .attr('y', d => yscale(d.views)) // Adjust property based on your data structure
+                .attr('width', xscale.bandwidth())
+                .attr('height', d => innerHeight - yscale(d.views))
+                .attr('fill', "#B21666")
+                
+        }
+    
     }
-
-
 
 })
