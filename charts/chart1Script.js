@@ -8,6 +8,12 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     (d) => d.Country // Group data by country
   );
 
+  // Tooltip
+  var tooltip = d3.select("#chart-1")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0)
+
   // get() method retrieves the count of selected country code
   // console.log("United States: ", countryCounts.get("US"));
 
@@ -81,7 +87,23 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
   arcs
     .append("path")
     .attr("d", arc)
-    .attr("fill", (d) => colorScale(d.data.country));
+    .attr("fill", (d) => colorScale(d.data.country))
+    .on("mouseover", function(event, d) {
+      tooltip
+          .transition()
+          .duration(300)
+          .style("opacity", .9)
+      tooltip.html(`
+          Country: ${d.data.country}: <br> Percentage: ${d.data.count}
+      `)  
+        .style("left", (d3.pointer(event)[0]) + "px")
+        .style("top", (d3.pointer(event)[1]) + "px")
+      })
+      .on("mouseout", function(d) {
+          tooltip.transition()
+              .duration(300)
+              .style("opacity", 0)
+      });
 
   arcs
     .append("text")
