@@ -31,7 +31,6 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     count,
   }));
 
-  countryData;
   var width = 600;
   var height = 600;
   var radius = Math.min(width, height) / 2;
@@ -115,9 +114,6 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .text(
       "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
     );
-
-
-
 
     var legendContainer = svg
     .append("g")
