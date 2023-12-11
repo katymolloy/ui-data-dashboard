@@ -101,6 +101,13 @@ h1 {
     margin: 15px;
 }
 
+.button {
+    color: white;
+    background-color: var(--colorSecondaryMagenta);
+    text-decoration: none;
+    padding: 5px 40px;
+    border-radius: 25px;
+}
 
 /* Tooltip */
 div.tooltip {

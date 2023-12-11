@@ -140,11 +140,28 @@ header {
     display: flex;
     justify-content: flex-start;
     align-items: center;
+    padding-top: 5px;
 }
 
 header .icon {
     height: 50px;
     margin: 0 1rem 0 5rem;
+}
+
+header div {
+    display: flex;
+    justify-content: space-between;
+}
+
+header .dashboard {
+    font-size: 20px;
+    margin-left: 575px;
+    color: white;
+    text-decoration: none;
+    font-weight: var(--textBold);
+    padding: 10px 40px;
+    background-color: var(--colorSecondaryMagenta);
+    border-radius: 50px;
 }
 
 aside {
