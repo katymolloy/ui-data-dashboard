@@ -103,10 +103,62 @@ h1 {
 
 .button {
     color: white;
+    font-size: 20px;
     background-color: var(--colorSecondaryMagenta);
     text-decoration: none;
-    padding: 5px 40px;
+    padding: 3px 20px;
     border-radius: 25px;
+    transition: .2s;
+}
+
+.main-button {
+    color: white;
+    text-transform: uppercase;
+    font-size: 20px;
+    font-weight: bold;
+    background-color: var(--colorSecondaryMagenta);
+    text-decoration: none;
+    padding: 15px 75px;
+    border-radius: 50px;
+    margin: 10px;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.4);
+    transition: .2s;
+}
+
+.main-button:hover,
+.button:hover {
+    transform: scale(1.02);
+}
+
+.gif {
+    background-image: url('./assets/GIF.gif');
+    background-size: cover;
+    height: 92vh;
+    color: white;
+    display: flex;
+    justify-content: start;
+}
+
+.gif img {
+    width: 200px;
+    margin: 75px 0 0 0;
+    padding: 0;
+}
+
+.gif h1 {
+    font-size: 75px;
+    font-weight: var(--textBold);
+    margin: 0;
+}
+
+.gif p {
+    font-size: 45px;
+    font-weight: var(--textBold);
+    margin: 0;
+}
+
+.gif span {
+    margin: 50px 0;
 }
 
 /* Tooltip */
