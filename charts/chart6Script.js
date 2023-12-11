@@ -56,14 +56,12 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .attr('width', svgwidth)
         .attr('height', svgheight)
 
-        var titleSpot = svg.append('g')
-        .attr("x", svgwidth / 2)
-        .attr("y", 30)  // Adjust the y-coordinate based on your layout
-        .attr("text-anchor", "middle")
+        const title = d3.select('.yearTitle')
+
 
     var g = svg
         .append("g")
-        .attr("transform", `translate(50, 50)`)
+        .attr("transform", `translate(60, 12)`)
         .attr("class", "graph6");
 
 
@@ -98,15 +96,14 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
     slider.on('input', function () {
 
         g.selectAll('.line').remove();
-        g.selectAll('.yearTitle').remove();
+
         const sliderVal = this.value;
-
-
-        g.append("text")
-        .attr('class', 'yearTitle')
-        .style("font-size", "20px")
-        .style("font-weight", "bold")
-        .text(sliderVal);
+        title.select('.yearTitle').remove(); // Remove existing title
+        title.append('text')
+            .attr('class', 'yearTitle')
+            .style('font-size', '20px')
+            .style('font-weight', 'bold')
+            .text(sliderVal);
 
 
 

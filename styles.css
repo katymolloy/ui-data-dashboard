@@ -145,6 +145,11 @@ chart 2,3,4,5,6: 450h, 100%
     height: 450px;
 }
 
+#chart-6{
+    display: flex;
+    flex-direction: column;
+} 
+
 #chart-4 {
     width: 950px;
     height: 450px;
@@ -161,4 +166,9 @@ chart 2,3,4,5,6: 450h, 100%
     justify-content: center;
     padding: 30px;
     font-size: 25px;
+}
+
+#year-slider{
+    display: flex;
+    justify-content: flex-start;
 }
