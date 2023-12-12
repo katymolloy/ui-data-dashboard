@@ -2,7 +2,7 @@ const chart5 = document.getElementById('chart-5');
 
 // d3.select(chart5).append('h1').text('Top 5 Youtube Channels Quarterly Income')
 d3.csv('./data/top_100_youtubers.csv').then(data => {
-    var svgwidth = 1430;
+    var svgwidth = 1300;
     var svgheight = 450;
     var padding = 100;
 
