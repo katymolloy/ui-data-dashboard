@@ -1,114 +1,42 @@
-<!--
-
-Student Names: 
-- Frederik Sommer Brondum
-- Kathleen Molloy
-- Matthew Dans
-- Matthew Gooding
-- Vasili McGowans
-
-Professor: Magdalene Ravichandran
-Course: INFO-3171(01)-23F User Interfaces & Data Visualization
-Date: 12-11-2023
-
-Appendix:
-- Chart 1: Vasili
-- Chart 2: Frederik 
-- Chart 3: Matthew D.
-- Chart 4: Frederik, Kathleen
-- Chart 5: Kathleen
-- Chart 6: Kathleen
-- Chart 7: Kathleen
-- Chart 8: Vasili
-- Chart 9: Matthew D. 
-- UI Layout: Matthew G.
--->
-
-
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-  <!--Import Google Font / Google Icons-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
-    rel="stylesheet" />
 
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>CommandTV Data Dashboard</title>
-  <script src="http://d3js.org/d3.v6.min.js" charset="utf-8"></script>
+    <!--Import Google Font / Google Icons-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
+        rel="stylesheet">
 
-  <link rel="stylesheet" href="styles.css" />
-  <script defer src="charts/chart1Script.js"></script>
-  <script defer src="charts/chart2Script.js"></script>
-  <script defer src="charts/chart3Script.js"></script>
-  <script defer src="charts/chart4Script.js"></script>
-  <script defer src="charts/chart5Script.js"></script>
-  <script defer src="charts/chart6Script.js"></script>
-  <script defer src="charts/chart7Script.js"></script>
-  <script defer src="charts/chart8Script.js"></script>
-  <script defer src="charts/chart9Script.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Command TV</title>
+    <link rel="stylesheet" href="styles.css" />
 </head>
 
-<body>
-  <header>
-    <span>
-      <img class="icon" src="assets/CTVIcon.png" />
-      <a>Command TV</a>
-    </span>
-    <a>Dashboard</a>
-    <div>
-      <a class="button" href="./home.html">Home</a>
-      <a class="button" href="./CTVPatternLibrary/library.html">UI Library</a>
-    </div>
-
-  </header>
-
-  <main>
-    <h1>YouTube Top 100 Data Dashboard</h1>
-    <div class="chartContainer">
-      <div id="chart-7">
-      </div>
-      <div id="chart-8">
-      </div>
-      <div id="chart-9">
-      </div>
-      <div id="chart-1">
-        <h1>Channels By Country</h1>
-      </div>
-      <div id="chart-2">
-        <h1>Channel Comments</h1>
-      </div>
-      <div id="chart-3">
-        <h1>Channel Categories</h1>
-      </div>
-      <div id="chart-4">
-        <h1>Top 5 Channel Avg. Views</h1>
-        <select id="dataDropdown"></select>
-      </div>
-      <div id="chart-5">
-        <h1>Top 5 Quarterly Incomes</h1>
-      </div>
-      <div id="chart-6">
-        <h1>Yearly Channel Video Topics</h1>
-        <div class="yearTitle"></div>
-        <input type="range" name="year-slide" id="year-slider" min="2005" max="2018" value="2006" />
-      </div>
-    </div>
-  </main>
-
-  <footer>
-    <span>
-      <img class="icon" src="assets/CTVIcon.png" />
-      <a>Command TV</a>
-    </span>
-    <a>Dashboard</a>
-    <div style="width: 200px;"></div>
-  </footer>
+<body style="height: 100vh; overflow: hidden;">
+    <header>
+        <span>
+            <img class="icon" src="assets/CTVIcon.png">
+            <a>Command TV</a>
+        </span>
+        <div>
+            <a class="button" href="./dashboard.html">Dashboard</a>
+            <a class="button" href="./CTVPatternLibrary/library.html">UI Library</a>
+        </div>
+    </header>
+    <main class="gif">
+        <img src="assets/CTVIconWhite.png">
+        <h1>COMMAND TV</h1>
+        <p>PLAY & LEARN</p>
+        <span>
+            <a class="main-button" href="./dashboard.html">Dashboard</a>
+            <a class="main-button" href="./CTVPatternLibrary/library.html">UI Library</a>
+        </span>
+    </main>
 </body>
 
 </html>
