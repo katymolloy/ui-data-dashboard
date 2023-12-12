@@ -8,6 +8,15 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     (d) => d.Country // Group data by country
   );
 
+  var categoryCounts = d3.rollup(
+    data,
+    (d) => d.length,
+    (d) => d.Category
+  );
+
+  console.log('CATEGORY COUNTS', categoryCounts);
+
+  // console.log("COUNTRY COUNTS", countryCounts);
   // Tooltip
   var tooltip = d3.select("#chart-1")
     .append("div")
@@ -88,22 +97,24 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .append("path")
     .attr("d", arc)
     .attr("fill", (d) => colorScale(d.data.country))
-    .on("mouseover", function(event, d) {
+    .on("mouseover", function (event, d) {
+      console.log("mouseover event triggered!");
       tooltip
-          .transition()
-          .duration(300)
-          .style("opacity", .9)
+        .transition()
+        .duration(300)
+        .style("opacity", 0.9)
+        .style("left", event.pageX + "px")
+        .style("top", event.pageY + "px");
       tooltip.html(`
-          Country: ${d.data.country}: <br> Percentage: ${d.data.count}
-      `)  
-        .style("left", (d3.pointer(event)[0]) + "px")
-        .style("top", (d3.pointer(event)[1]) + "px")
-      })
-      .on("mouseout", function(d) {
-          tooltip.transition()
-              .duration(300)
-              .style("opacity", 0)
-      });
+          Country: ${d.data.country}<br>
+          Percentage: ${d.data.count}%
+      `);
+    })
+    .on("mouseout", function (d) {
+      tooltip.transition()
+        .duration(300)
+        .style("opacity", 0)
+    });
 
   arcs
     .append("text")
@@ -133,6 +144,11 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .text(
       "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
     );
+
+  var tooltip = d3.select("#chart-1")
+    .append("div")
+    .attr("class", "tooltip")
+    .style("opacity", 0);
 
   var legendContainer = svg.append("g").attr("transform", function (d, i) {
     return "translate(" + 50 + "," + i * -20 + ")";

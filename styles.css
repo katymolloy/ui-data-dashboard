@@ -110,12 +110,13 @@ h1 {
 }
 
 /* Tooltip */
-div.tooltip {
-    position: absolute;
-    background: rgb(147, 105, 219);
-    padding: 10px;
-    font: 10px Arial, sans-serif;
-    text-align: center;
+.tooltip {
+  position: absolute;
+  background-color: white;
+  border: 1px solid black;
+  padding: 10px;
+  opacity: 0;
+  z-index: 1;
 }
 
 
