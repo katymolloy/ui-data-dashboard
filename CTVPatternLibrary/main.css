@@ -154,14 +154,17 @@ header div {
 }
 
 header .dashboard {
-    font-size: 20px;
-    margin-left: 575px;
     color: white;
-    text-decoration: none;
-    font-weight: var(--textBold);
-    padding: 10px 40px;
+    font-size: 20px;
     background-color: var(--colorSecondaryMagenta);
-    border-radius: 50px;
+    text-decoration: none;
+    padding: 3px 20px;
+    border-radius: 25px;
+    font-weight: var(--textSemiBold);
+}
+
+header span {
+    margin-left: 550px;
 }
 
 aside {
