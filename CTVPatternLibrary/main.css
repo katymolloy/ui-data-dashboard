@@ -180,6 +180,10 @@ aside {
     padding: var(--space-2);
 }
 
+.dashboard:hover {
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.25);
+}
+
 nav ul {
     list-style: none;
     margin-left: -2em;
