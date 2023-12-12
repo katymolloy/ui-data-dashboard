@@ -88,7 +88,7 @@ h1 {
 }
 
 .chartContainer {
-    width: 92%;
+    width: 100%;
     display: flex;
     flex-wrap: wrap;
     align-items: center;

@@ -41,7 +41,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
 
     // The sizes
-    var svgWidth = 950;
+    var svgWidth = 850;
     var svgHeight = 390;
     var padding = 50;
 
