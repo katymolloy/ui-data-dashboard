@@ -1,15 +1,42 @@
+<!--
+
+Student Names: 
+- Frederik Sommer Brondum
+- Kathleen Molloy
+- Matthew Dans
+- Matthew Gooding
+- Vasili McGowans
+
+Professor: Magdalene Ravichandran
+Course: INFO-3171(01)-23F User Interfaces & Data Visualization
+Date: 12-11-2023
+
+Appendix:
+- Chart 1: Vasili
+- Chart 2: Frederik 
+- Chart 3: Matthew D.
+- Chart 4: Frederik
+- Chart 5: Kathleen
+- Chart 6: Kathleen
+- Chart 7: Kathleen
+- Chart 8: Vasili
+- Chart 9: Matthew D. 
+- UI Layout: Matthew G.
+
+-->
+
+
 <!DOCTYPE html>
 <html lang="en">
 
 <head>
-
   <!--Import Google Font / Google Icons-->
-  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link
     href="https://fonts.googleapis.com/css2?family=Barlow:wght@300;400;500;600;700&family=Merriweather:wght@300;400;700&display=swap"
-    rel="stylesheet">
+    rel="stylesheet" />
 
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -19,6 +46,7 @@
   <link rel="stylesheet" href="styles.css" />
   <script defer src="charts/chart1Script.js"></script>
   <script defer src="charts/chart2Script.js"></script>
+  <script defer src="charts/chart3Script.js"></script>
   <script defer src="charts/chart4Script.js"></script>
   <script defer src="charts/chart5Script.js"></script>
   <script defer src="charts/chart6Script.js"></script>
@@ -29,7 +57,7 @@
 <body>
   <header>
     <span>
-      <img class="icon" src="assets/CTVIcon.png">
+      <img class="icon" src="assets/CTVIcon.png" />
       <a>Command TV</a>
     </span>
     <a>Dashboard</a>
@@ -50,19 +78,19 @@
       </div>
       <div id="chart-5"></div>
       <div id="chart-6">
-        <input type="range" name="year-slide" id='year-slider' min="2005" max="2018" value="2006">
+        <div class="yearTitle"></div>
+        <input type="range" name="year-slide" id="year-slider" min="2005" max="2018" value="2006" />
       </div>
-
     </div>
   </main>
 
   <footer>
     <span>
-      <img class="icon" src="assets/CTVIcon.png">
+      <img class="icon" src="assets/CTVIcon.png" />
       <a>Command TV</a>
     </span>
     <a>Dashboard</a>
-    <a style="margin: 0 75px;">0</a>
+    <a style="margin: 0 75px">0</a>
   </footer>
 </body>
 
