@@ -2,8 +2,8 @@ const chart6 = document.getElementById('chart-6');
 
 d3.csv('./data/top_100_youtubers.csv').then(data => {
 
-    var svgwidth = 930;
-    var svgheight = 450;
+    var svgwidth = 1430;
+    var svgheight = 410;
     var padding = 100;
 
     var inner_width = svgwidth - padding;

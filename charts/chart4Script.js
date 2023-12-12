@@ -42,7 +42,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
 
     // The sizes
     var svgWidth = 950;
-    var svgHeight = 420;
+    var svgHeight = 390;
     var padding = 50;
 
     // The inner widths
@@ -80,7 +80,7 @@ d3.csv("./data/avg_view_every_month.csv").then((data) => {
         .domain(months)
         .range([0, innerWidth])
         .padding(0.2);
-        
+
     var xAxis = d3.axisBottom().scale(xScale);
 
     g.append("g")

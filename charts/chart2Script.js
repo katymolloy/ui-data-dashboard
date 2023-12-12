@@ -23,7 +23,7 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         comments: +row['CommentsAvg']
     }))
     // console.log(chart2Data)
-    
+
     var numberOfSubscribers = chart2Data.map((d) => d.subscribers)
 
     var g = svg.append('g')
@@ -70,18 +70,18 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     // X-axis Title
     svg.append("text")
-       .attr("x", svgWidth / 2)
-       .attr("y", svgHeight - 5)
-       .style("text-anchor", "middle")
-       .text("Subscribers");
+        .attr("x", svgWidth / 2)
+        .attr("y", svgHeight - 5)
+        .style("text-anchor", "middle")
+        .text("Subscribers");
 
     // Y-axis Title
     svg.append("text")
-       .attr("transform", "rotate(-90)")
-       .attr("x", -svgHeight / 2)
-       .attr("y", 20)
-       .style("text-anchor", "middle")
-       .text("Avg. Comments");
+        .attr("transform", "rotate(-90)")
+        .attr("x", -svgHeight / 2)
+        .attr("y", 20)
+        .style("text-anchor", "middle")
+        .text("Avg. Comments");
 
     // Brushing Title
     svg.append("text")
@@ -90,12 +90,12 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
         .style("text-anchor", "middle")
         .text("Try Brushing")
 
-    
+
     // Brush functionality
 
     // Creating the brush itself
     const brush = d3.brush()
-        .extent([[0,0], [svgWidth, svgHeight]])
+        .extent([[0, 0], [svgWidth, svgHeight]])
         .on('end', brushEnd);
 
     // Setting the area of the brush

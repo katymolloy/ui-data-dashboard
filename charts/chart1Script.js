@@ -17,6 +17,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
   // get() method retrieves the count of selected country code
   // console.log("United States: ", countryCounts.get("US"));
 
+  /*
   d3.select("#chart-1")
     .append("h2")
     .text("Distribution of Top 100 YouTubers by Country");
@@ -28,6 +29,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
         "US"
       )}%`
     );
+    */
 
   // Create an array by passing countryCounts as the array-like
   // mapFn uses the destructuring assignment to extract the country, and count properties from countryCounts object
@@ -37,9 +39,9 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     count,
   }));
 
-  var width = 600;
-  var height = 600;
-  var radius = Math.min(width, height) / 2;
+  var width = 400;
+  var height = 400;
+  var radius = Math.min(width, height) / 2.5;
 
   var colorScale = d3
     .scaleOrdinal()
@@ -72,7 +74,7 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .attr("width", width * 2)
     .attr("height", height)
     .append("g")
-    .attr("transform", "translate(" + width / 2 + "," + height / 2 + ")");
+    .attr("transform", "translate(" + width / 1.1 + "," + height / 2 + ")");
 
   // Creates pie chart configuration to be used for var arc;
   var pie = d3.pie().value((d) => d.count);
@@ -88,22 +90,22 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .append("path")
     .attr("d", arc)
     .attr("fill", (d) => colorScale(d.data.country))
-    .on("mouseover", function(event, d) {
+    .on("mouseover", function (event, d) {
       tooltip
-          .transition()
-          .duration(300)
-          .style("opacity", .9)
+        .transition()
+        .duration(300)
+        .style("opacity", .9)
       tooltip.html(`
           Country: ${d.data.country}: <br> Percentage: ${d.data.count}
-      `)  
+      `)
         .style("left", (d3.pointer(event)[0]) + "px")
         .style("top", (d3.pointer(event)[1]) + "px")
-      })
-      .on("mouseout", function(d) {
-          tooltip.transition()
-              .duration(300)
-              .style("opacity", 0)
-      });
+    })
+    .on("mouseout", function (d) {
+      tooltip.transition()
+        .duration(300)
+        .style("opacity", 0)
+    });
 
   arcs
     .append("text")
@@ -122,20 +124,22 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .style("text-anchor", "middle")
     .text((d) => d.data.count + "%");
 
-  d3.select("#chart-1").append("h2").text("DISCLAIMER");
-  d3.select("#chart-1")
-    .append("p")
-    .text(
-      "**Countries not labelled on the chart contributed 1%, or less, and were excluded from being displayed"
-    );
-  d3.select("#chart-1")
-    .append("p")
-    .text(
-      "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
-    );
+  /*
+d3.select("#chart-1").append("h2").text("DISCLAIMER");
+d3.select("#chart-1")
+  .append("p")
+  .text(
+    "**Countries not labelled on the chart contributed 1%, or less, and were excluded from being displayed"
+  );
+d3.select("#chart-1")
+  .append("p")
+  .text(
+    "**Countries that contributed 2%, or less, of the overall proportion had their percentages excluded from being displayed"
+  );
+  */
 
   var legendContainer = svg.append("g").attr("transform", function (d, i) {
-    return "translate(" + 50 + "," + i * -20 + ")";
+    return "translate( -50 , 120)";
   });
 
   legendContainer
@@ -145,7 +149,6 @@ d3.csv("data/top_100_youtubers.csv").then(function (data) {
     .style("text-anchor", "middle")
     .style("font-weight", "bold")
     .style("font-size", 20)
-    .text("Legend:");
 
   var legend = legendContainer
     .selectAll(".legend")

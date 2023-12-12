@@ -44,6 +44,6 @@ d3.csv('./data/top_100_youtubers.csv').then(data => {
 
     // data is output in a readable way
     d3.select(chart7).append('h2').text('Most Viewed Category')
-    d3.select(chart7).append('p').text(`${mostViews[0].Category} has the most views, with ${mostViews[0].Views} total views`)
+    d3.select(chart7).append('p').text(`${mostViews[0].Category} with ${mostViews[0].Views} total views`)
 
 })
